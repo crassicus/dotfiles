@@ -16,9 +16,11 @@ keymap = [
 	{ on = "d", run = "yank --cut", desc = "Yank selected files (cut)" },
 	{ on = "p", run = "paste", desc = "Paste yanked files" },
 	{ on = "Y", run = "unyank", desc = "Cancel the yank status" },
+	{ on = "a", run = "create", desc = "Create a file (ends with / for directories)" },
 	{ on = "D", run = "remove --permanently", desc = "Permanently delete selected files" },
 	{ on = "r", run = "rename --cursor=before_ext", desc = "Rename selected file(s)" },
 
 	# Toggle
 	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "Toggle the current selection state" },
+	{ on = "X",   run = "toggle_all --state=off", desc = "Select all files" },
 ]
