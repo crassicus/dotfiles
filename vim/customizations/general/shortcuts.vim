@@ -52,7 +52,7 @@ nmap vv :w<cr>
 
 " ==== Miscellaneous ====
 nnoremap <silent> H :ToggleNerdTree<cr>
-nnoremap ww :FZF $ROOT<cr>
+nnoremap <space> :FZF $ROOT<cr>
 nnoremap <silent> WW :CloseSaving<cr>
 nnoremap <silent> FF :CloseNotSaving<cr>
 nnoremap > >>
@@ -61,7 +61,7 @@ nnoremap < <<
 " ==== Toggle tabs and buffers ====
 nnoremap B :tabnext<cr>
 nnoremap <silent> tt :SwitchToBuffer<cr>
-nnoremap <silent> <space> :GoToNerdTreeWindow<cr>
+nnoremap <silent> b :GoToNerdTreeWindow<cr>
 
 " ==== General ====
 inoremap ' ""<Esc>i

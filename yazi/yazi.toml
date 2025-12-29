@@ -1,0 +1,31 @@
+[mgr]
+ratio = [25, 40, 35]
+
+[opener]
+mpv = [
+  { run = 'mpv "$@"', orphan = true },
+]
+imv = [
+	{ run = 'imv "$@"', orphan = true, for = "unix" },
+]
+zathura = [
+  { run = 'zathura-full "$@"', orphan = true, for = "unix" },
+]
+vim = [
+  { run = 'vim "$@"', block = true, for = "unix" },
+]
+
+
+[open]
+rules = [
+ { mime = "video/*", use = "mpv" },
+ { mime = "audio/*", use = "mpv" },
+ { mime = "image/*", use = "imv" },
+ { mime = "text/*", use = "vim" },
+ { mime = "application/pdf", use = "zathura" },
+ { mime = "application/epub+zip", use = "zathura" },
+]
+
+
+[preview]
+image_quality = 80

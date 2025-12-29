@@ -1,0 +1,24 @@
+[mgr]
+keymap = [
+	# Hopping
+	{ on = "n", run = "arrow 1" },
+	{ on = "e", run = "arrow -1" },
+	{ on = "m", run = "leave" },
+	{ on = "i", run = "enter" },
+	{ on = "G",          run = "arrow bot", desc = "Go to bottom" },
+	{ on = [ "g", "g" ], run = "arrow top", desc = "Go to top" },
+
+	{ on = "q", run = "quit", desc = "Quit the process" },
+
+	# Operation
+	{ on = "o", run = "open", desc = "Open selected files" },
+	{ on = "y", run = "yank", desc = "Yank selected files (copy)" },
+	{ on = "d", run = "yank --cut", desc = "Yank selected files (cut)" },
+	{ on = "p", run = "paste", desc = "Paste yanked files" },
+	{ on = "Y", run = "unyank", desc = "Cancel the yank status" },
+	{ on = "D", run = "remove --permanently", desc = "Permanently delete selected files" },
+	{ on = "r", run = "rename --cursor=before_ext", desc = "Rename selected file(s)" },
+
+	# Toggle
+	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "Toggle the current selection state" },
+]

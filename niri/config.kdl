@@ -16,8 +16,8 @@ input {
             variant "colemak_dh"
             options "caps:super"
         }
-        repeat-rate 80
-        repeat-delay 250
+        repeat-rate 120
+        repeat-delay 180
     }
 }
 
@@ -32,7 +32,7 @@ layout {
     center-focused-column "on-overflow"
     always-center-single-column
     empty-workspace-above-first
-    default-column-width { proportion 0.6; }
+    default-column-width { proportion 0.7; }
 
     preset-column-widths {
         proportion 0.25
@@ -77,5 +77,7 @@ binds {
 
     Super+Apostrophe { spawn "wtype" "-P" "Escape" "-p" "Escape"; }
     Super+P { spawn "wtype" "-M" "ctrl" "c"; }
-
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
 }
