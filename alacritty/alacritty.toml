@@ -4,7 +4,7 @@ padding = { x = 25, y = 25 }
 [font]
 normal = { family = "Comic Mono", style = "normal"}
 bold = { family = "Comic Mono", style = "bold"}
-size = 28
+size = 27
 offset = { y = 3 }
 
 [selection]

@@ -50,8 +50,11 @@ linker "vim/customizations" ".vim/customizations"
 [ -e "$HOME/.config/mpv" ] && rm "$HOME/.config/mpv"
 linker "mpv" ".config/mpv"
 
-[ -e "$HOME/.config/lf" ] && rm "$HOME/.config/lf"
-linker "lf" ".config/lf"
+[ -e "$HOME/.config/yazi" ] && rm "$HOME/.config/yazi"
+linker "yazi" ".config/yazi"
+
+[ -e "$HOME/.config/foot" ] && rm "$HOME/.config/foot"
+linker "foot" ".config/foot"
 
 [ -e "$HOME/.config/zathura" ] && rm "$HOME/.config/zathura"
 linker "zathura" ".config/zathura"
@@ -64,6 +67,5 @@ linker "shell/scripts" ".scripts"
 
 [ -e "$HOME/.config/niri" ] && rm "$HOME/.config/niri"
 linker "niri" ".config/niri"
-
 
 echo "Symlinks created."

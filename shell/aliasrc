@@ -17,7 +17,8 @@ alias \
 	dt="cd ~/.dotfiles" \
 	ds="cd ~/.dotfiles && v run.sh" \
 	zh="v ~/.zsh_history" \
-  y="lf" \
+  y="yazi" \
+	ft="foot & disown; exit" \
 
 alias \
 	xmr="xmonad --recompile && xmonad --restart" \
