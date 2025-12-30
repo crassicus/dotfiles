@@ -19,10 +19,9 @@ alias \
 	zh="v ~/.zsh_history" \
   y="yazi" \
 	ft="foot & disown; exit" \
+	brave="brave-browser-stable & disown; exit" \
 
 alias \
-	xmr="xmonad --recompile && xmonad --restart" \
-	to="tmux attach -t 0" \
   z="zathura-full" \
 	gk="gpg --list-keys --keyid-format long" \
   nf="neofetch" \
@@ -32,17 +31,18 @@ alias \
 
 # Git
 alias \
-  gg="git status" \
+  gs="git status" \
   gb="git branch" \
   gl="git log --all --graph" \
-  gs="git switch" \
+  gw="git switch" \
   go="git checkout" \
-  gc='git commit -m "|"' \
+  gc="git clone" \
+  gx='git commit -m "|"' \
   gp="git pull" \
-  gu="git push origin" \
+  gh="git push" \
   ga="git add" \
   gd="git diff" \
-  gr="git restore" \
+  gr="git remote" \
   gt="git stash" \
   gm="git merge" \
   gi="git init"

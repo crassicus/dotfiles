@@ -40,6 +40,7 @@ export DT="$HOME/.dotfiles"
 export PATH="$PATH:$HOME/.scripts"
 export PATH="$HOME/.cargo/bin:$PATH"
 export UV_CACHE_DIR="/home/disk/uv/cache"
+export UV_LINK_MODE="copy"
 
 # Allow Python access to repos in local folder
 export PYTHONPATH="$(echo $HOME/.local/repos/python/*/src | tr ' ' ':'):$PYTHONPATH"

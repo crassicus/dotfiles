@@ -105,17 +105,18 @@ typeset -A abbreviations
 abbreviations=(
   # Github
   "gi"   "git init"
-  "gg"   "git status"
+  "gs"   "git status"
   "gl"   "git log --all --graph"
   "gb"   "git branch"
-  "gs"   "git switch"
+  "gw"   "git switch"
   "go"   "git checkout"
-  "gc"   'git commit -m "|"'
+  "gc"   'git clone'
+  "gx"   'git commit -m "|"'
   "gp"   "git pull"
   "gh"   "git push"
   "ga"   "git add"
   "gd"   "git diff"
-  "gr"   "git restore"
+  "gr"   "git remote"
   "gt"   "git stash"
   "gm"   "git merge"
 
@@ -129,12 +130,9 @@ abbreviations=(
   "ct"  "cargo test"
 	"cr"  "cargo build --release"
   "cw"  "cargo watch -x check -x test -x run"
-
-  # Tmux
-	"to" "tmux attach -t 0"
 )
 
-function expand-abbreviation-foo() {
+function expand-abbreviation() {
   local lastword="${LBUFFER##* }"
   local expansion="${abbreviations[$lastword]}"
 
@@ -162,8 +160,8 @@ function expand-abbreviation-foo() {
   zle self-insert
 }
 
-zle -N expand-abbreviation-foo
-bindkey " " expand-abbreviation-foo
+zle -N expand-abbreviation
+bindkey " " expand-abbreviation
 
 chpwd() {
     source rootfinder
