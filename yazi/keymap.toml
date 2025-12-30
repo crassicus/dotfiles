@@ -1,5 +1,8 @@
 [mgr]
 keymap = [
+	{ on = "<Esc>", run = "escape", desc = "Exit visual mode, clear selection, or cancel search" },
+	{ on = "q", run = "quit", desc = "Quit the process" },
+
 	# Hopping
 	{ on = "n", run = "arrow 1" },
 	{ on = "e", run = "arrow -1" },
@@ -8,7 +11,6 @@ keymap = [
 	{ on = "G",          run = "arrow bot", desc = "Go to bottom" },
 	{ on = [ "g", "g" ], run = "arrow top", desc = "Go to top" },
 
-	{ on = "q", run = "quit", desc = "Quit the process" },
 
 	# Operation
 	{ on = "o", run = "open", desc = "Open selected files" },
@@ -18,9 +20,23 @@ keymap = [
 	{ on = "Y", run = "unyank", desc = "Cancel the yank status" },
 	{ on = "a", run = "create", desc = "Create a file (ends with / for directories)" },
 	{ on = "D", run = "remove --permanently", desc = "Permanently delete selected files" },
-	{ on = "r", run = "rename --cursor=before_ext", desc = "Rename selected file(s)" },
+	{ on = "r", run = "rename --empty=stem --cursor=start", desc = "Rename selected file(s)" },
+	{ on = ".", run = "hidden toggle", desc = "Toggle the visibility of hidden files" },
 
 	# Toggle
 	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "Toggle the current selection state" },
 	{ on = "X",   run = "toggle_all --state=off", desc = "Select all files" },
+
+  # Sorting
+	{ on = [ ",", "a" ], run = "sort alphabetical --reverse=no",                 desc = "Sort alphabetically" },
+	{ on = [ ",", "A" ], run = "sort alphabetical --reverse=yes",                desc = "Sort alphabetically (reverse)" },
+	{ on = [ ",", "n" ], run = "sort natural --reverse=no",                      desc = "Sort naturally" },
+	{ on = [ ",", "N" ], run = "sort natural --reverse=yes",                     desc = "Sort naturally (reverse)" },
+	{ on = [ ",", "s" ], run = [ "sort size --reverse=no", "linemode size" ],    desc = "Sort by size" },
+	{ on = [ ",", "S" ], run = [ "sort size --reverse=yes", "linemode size" ],   desc = "Sort by size (reverse)" },
+
+	# Find
+	{ on = "/", run = "find --smart", desc = "Find next file" },
+	{ on = "N", run = "find_arrow", desc = "Next found" },
+	{ on = "E", run = "find_arrow --previous", desc = "Previous found" },
 ]

@@ -20,6 +20,7 @@ alias \
   y="yazi" \
 	ft="foot & disown; exit" \
 	brave="brave-browser-stable & disown; exit" \
+	firefox="firefox & disown; exit" \
 
 alias \
   z="zathura-full" \
