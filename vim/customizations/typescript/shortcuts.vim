@@ -27,6 +27,10 @@ autocmd FileType typescript
       \ inoreabbre <expr> <buffer> cf
       \ utils.Wrapper("const x = () => {};\<Esc>Fxs")
 
+autocmd FileType typescript
+      \ inoreabbre <expr> <buffer> co
+      \ utils.Wrapper("console.log()\<Esc>i")
+
 
 # ==== Aliases ====
 

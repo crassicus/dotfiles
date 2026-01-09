@@ -78,8 +78,6 @@ def ToggleNerdTree(): void
     endif
 
     exec "silent normal! :NERDTree\<cr>"
-    # Give cursor to main buffer
-    call feedkeys("\<C-w>w", 'n')
 
     # Mutate global state
     g:nerdtree_is_open = true
@@ -243,6 +241,8 @@ augroup END
 def StartNerdTree(): void
     if &columns > 88 && g:nerdtree_is_open == false
         execute "silent normal! :ToggleNerdTree\<cr>"
+        # Give cursor to main buffer
+        call feedkeys("\<C-w>w", 'n')
     endif
 enddef
 autocmd VimEnter * ++once call StartNerdTree()
