@@ -65,7 +65,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> hi
-      \ ms:ImporStructureFrom<space>
+      \ ms:ImportStructureFrom<space>
 
 autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> c.
@@ -75,8 +75,9 @@ autocmd FileType typescriptreact
 autocmd FileType typescriptreact
       \ inoremap <buffer> kkf
       \ function x() {<cr><esc>O<tab>return<space>
-                  \ (<cr><>Hello function</><cr>)
-                  \<cr>}<esc>4k0fxs
+                  \ (<cr><>Hello Component</><cr>)
+                  \ <cr>}<cr><cr>export default _;
+                  \ <esc>jdd7k0fxs
 
 # Callback component
 autocmd FileType typescriptreact
@@ -185,7 +186,7 @@ autocmd FileType typescriptreact
       \ utils.Wrapper("<button type=\"button\" onClick={() => {}}></button>\<Esc>F/hi")
 
 autocmd FileType typescriptreact
-      \ inoreabbre <expr> <buffer> it
+      \ inoreabbre <expr> <buffer> int
       \ utils.Wrapper("interface x {}\<Esc>Fxcw")
 
 autocmd FileType typescriptreact

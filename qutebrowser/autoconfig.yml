@@ -88,6 +88,8 @@ settings:
       p5: http://localhost:5173/{}
       p4: http://localhost:4173/{}
       p8: http://localhost:8080/{}
+      pw: http://localhost:9999/{}
+      pf: http://localhost:5555/{}
       rs: https://docs.rs/{}
       yt: https://www.youtube.com/results?search_query={}
       gp: https://chat.openai.com/{}

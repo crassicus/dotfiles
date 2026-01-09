@@ -21,8 +21,6 @@ history = 100000
 
 [keyboard]
 bindings = [
-  #{ key = "u", mods = "Super", action = "ScrollLineUp" },
-  #{ key = "l", mods = "Super", action = "ScrollLineDown" },
   { key = "h", mods = "Super", action = "Paste" },
   { key = "-", mods = "Super", action = "DecreaseFontSize" },
   { key = "=", mods = "Super", action = "IncreaseFontSize" },

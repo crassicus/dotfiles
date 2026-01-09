@@ -1,7 +1,6 @@
 vim9script
-# ***********************************************
-# *         TYPESCRIPTREACT SCRIPTS             *
-# ***********************************************
+
+# Typescript scripts
 
 import "../general/scripts.vim" as gen
 

@@ -16,7 +16,7 @@ autocmd FileType typescript
 import "../general/scripts.vim" as utils
 
 autocmd FileType typescript
-      \ inoreabbre <expr> <buffer> it
+      \ inoreabbre <expr> <buffer> int
       \ utils.Wrapper("interface x {}\<Esc>Fxcw")
 
 autocmd FileType typescript
