@@ -26,7 +26,7 @@ endif
 " ==== Syntax ====
 syntax on
 filetype plugin indent on
-autocmd BufWinEnter *.html,*.css ++once syntax on
+autocmd BufWinEnter *.html,*.css,*.svelte ++once syntax on
 
 " ==== Buffer Cursor Position ====
 autocmd BufLeave * let b:winview = winsaveview()

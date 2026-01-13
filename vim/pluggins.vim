@@ -13,6 +13,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'itchyny/vim-gitbranch',
 Plug 'jpalardy/vim-slime',
 Plug 'makerj/vim-pdf',
+Plug 'evanleck/vim-svelte', { 'branch': 'main' },
 call plug#end()
 
 
@@ -21,6 +22,7 @@ let g:ale_linters = {
       \ 'rust': ['analyzer'],
       \ 'sh': ['shellcheck'],
       \ 'python': ['pyrefly'],
+      \ 'svelte': ['svelteserver'],
       \ 'typescript': ['eslint', 'tsserver'],
       \ 'typescriptreact': ['eslint', 'tsserver'],
       \ }
@@ -33,6 +35,7 @@ let g:ale_fixers = {
       \ 'typescriptreact': ['prettier'],
       \ 'css': ["prettier"],
       \ 'html': ["prettier"],
+      \ 'svelte': ["prettier"],
       \ }
 
 

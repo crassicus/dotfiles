@@ -16,3 +16,5 @@ source ~/.vim/customizations/general/shortcuts.vim
 source ~/.vim/customizations/html/shortcuts.vim
 source ~/.vim/customizations/html/scripts.vim
 source ~/.vim/customizations/css/shortcuts.vim
+source ~/.vim/customizations/svelte/shortcuts.vim
+source ~/.vim/customizations/svelte/scripts.vim
