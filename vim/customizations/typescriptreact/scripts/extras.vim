@@ -122,6 +122,27 @@ export def Write(method: string): string
 
         return join(lines, "\n")
     endif
+
+    if method == "component"
+        var lines = [
+            \ 'function () {',
+            \ 'return <>Hello Component</>',
+            \ '}',
+            \ '',
+            \ 'export default x;',
+        ]
+        return join(lines, "\n")
+    endif
+
+    if method == "callback_component"
+        var lines = [
+            \ 'const  = () => {',
+            \ 'return <>Hello Component</>',
+            \ '}',
+        ]
+        return join(lines, "\n")
+    endif
+
     return ""
 enddef
 

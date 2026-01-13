@@ -71,22 +71,6 @@ autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> c.
       \ :EditAfterTag<cr>
 
-# Functional component
-autocmd FileType typescriptreact
-      \ inoremap <buffer> kkf
-      \ function x() {<cr><esc>O<tab>return<space>
-                  \ (<cr><>Hello Component</><cr>)
-                  \ <cr>}<cr><cr>export default _;
-                  \ <esc>jdd7k0fxs
-
-# Callback component
-autocmd FileType typescriptreact
-      \ inoremap <buffer> kkc
-      \ const x = () => {<cr><Esc>O<tab>return<space>
-                  \ (<cr><>Hello Component</><cr>)
-                  \<cr>}<Esc>4k0fxs
-
-
 
 
 # ==== Semantics ====
@@ -222,6 +206,13 @@ autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> ta
       \ utils.Wrapper(extraScripts.Write("table") .. "\<Esc>8k2fh")
 
+autocmd FileType typescriptreact
+      \ inoreabbre <expr> <buffer> fc
+      \ utils.Wrapper(extraScripts.Write("component") .. "\<Esc>?function\<cr>wi")
+
+autocmd FileType typescriptreact
+      \ inoreabbre <expr> <buffer> cc
+      \ utils.Wrapper(extraScripts.Write("callback_component") .. "\<Esc>?const\<cr>whi")
 
 # ==== Aliases ====
 
