@@ -39,6 +39,7 @@ nmap ta \ca
 " ==== Move from word to word ====
 nnoremap s W
 nnoremap r B
+nnoremap w zz
 
 nnoremap f s
 nnoremap q <C-r>

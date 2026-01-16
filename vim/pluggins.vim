@@ -13,7 +13,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'itchyny/vim-gitbranch',
 Plug 'jpalardy/vim-slime',
 Plug 'makerj/vim-pdf',
-Plug 'evanleck/vim-svelte', { 'branch': 'main' },
 call plug#end()
 
 

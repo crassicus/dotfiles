@@ -126,7 +126,7 @@ autocmd FileType typescriptreact
       \ utils.Wrapper("<option></option>\<Esc>FoT>i")
 
 autocmd FileType typescriptreact
-      \ inoreabbre <expr> <buffer> p
+      \ inoreabbre <expr> <buffer> pa
       \ utils.Wrapper("<p></p>\<Esc>FpT>i")
 
 autocmd FileType typescriptreact

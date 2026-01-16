@@ -1,11 +1,17 @@
 vim9script
 # vim/customizations/svelte/shortcuts.ts
 
-
 autocmd FileType svelte
       \ nnoremap <silent> <buffer> c.
-      \ :EditAfterTag<cr>
+      \ :ChangeTagContent<cr>
 
+autocmd FileType svelte
+      \ nnoremap <silent> <buffer> tn
+      \ :AddClass<cr>
+
+autocmd FileType svelte
+      \ nnoremap <silent> <buffer> to
+      \ :AddAttribute<cr>
 
 
 # ==== Semantics ====
@@ -17,11 +23,11 @@ autocmd FileType svelte
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> sc
-      \ utils.Wrapper('<script lang="ts"></script><Esc>F>li<cr><Esc>O')
+      \ utils.Wrapper('<script lang="ts"><esc>^d0o</script><esc>^d0O<esc>0i<tab>')
 
 autocmd FileType svelte
-      \ inoreabbre <expr> <buffer> vd
-      \ utils.Wrapper("<>\<CR></>\<Esc>O")
+      \ inoreabbre <expr> <buffer> st
+      \ utils.Wrapper('<style><esc>^d0o</style><esc>^d0O<esc>0i<tab>')
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> ip
@@ -64,12 +70,12 @@ autocmd FileType svelte
       \ utils.Wrapper("<option></option>\<Esc>FoT>i")
 
 autocmd FileType svelte
-      \ inoreabbre <expr> <buffer> p
+      \ inoreabbre <expr> <buffer> pa
       \ utils.Wrapper("<p></p>\<Esc>FpT>i")
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> ul
-      \ utils.Wrapper("<ul>\<CR></ul>\<Esc>O")
+      \ utils.Wrapper("<ul><esc>o</ul><esc>O")
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> sel
@@ -81,7 +87,7 @@ autocmd FileType svelte
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> la
-      \ utils.Wrapper("<label htmlFor=\"\"></label>\<Esc>FlT>i")
+      \ utils.Wrapper("<label for=\"\"></label>\<Esc>FlT>i")
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> na
@@ -105,15 +111,11 @@ autocmd FileType svelte
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> bu
-      \ utils.Wrapper("<button type=\"button\" onClick={() => {}}></button>\<Esc>F/hi")
+      \ utils.Wrapper("<button type=\"button\" onclick={() => {}}></button>\<Esc>F/hi")
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> int
       \ utils.Wrapper("interface x {}\<Esc>Fxcw")
-
-autocmd FileType svelte
-      \ inoreabbre <expr> <buffer> st
-      \ utils.Wrapper("const [, set] = useState();\<Esc>F,i")
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> cf
@@ -134,3 +136,11 @@ autocmd FileType svelte
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> td
       \ utils.Wrapper("<td></td>\<Esc>T>i")
+
+
+
+# ==== Callable functions ====
+import "./scripts.vim" as extraScripts
+
+
+defcompile
