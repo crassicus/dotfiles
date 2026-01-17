@@ -214,8 +214,8 @@ autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> cc
       \ utils.Wrapper(extraScripts.Write("callback_component") .. "\<Esc>?const\<cr>whi")
 
-# ==== Aliases ====
 
+# ==== Aliases ====
 autocmd FileType typescriptreact
       \ cnoreabbrev <expr> <buffer> lib
       \ getcmdline() ==# 'lib' ? 'ImportFromLib' : 'lib'
