@@ -151,9 +151,9 @@ nnoremap N n
 nnoremap E N
 
 " ==== Markers ====
-nnoremap ,t `t
-nnoremap ,s `s
-nnoremap ,r `r
+nnoremap ,t `tzz
+nnoremap ,s `szz
+nnoremap ,r `rzz
 nnoremap ,,t mt
 nnoremap ,,s ms
 nnoremap ,,r mr
