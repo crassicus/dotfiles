@@ -13,6 +13,9 @@ autocmd FileType svelte
       \ nnoremap <silent> <buffer> to
       \ :AddAttribute<cr>
 
+autocmd FileType svelte
+      \ nnoremap <buffer> hr
+      \ ms:ImportFrom $components/index<cr>
 
 
 # ==== HTML Shortcuts ====

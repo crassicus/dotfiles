@@ -73,6 +73,40 @@ enddef
 autocmd FileType svelte command! -nargs=* AddAttribute call AddAttribute()
 
 
+# This function automatically finds or creates import statements
+# in Svelte files for a given module pattern.
+export def ImportFrom(pattern: string): void
+  var regex_line = $"import {{ .* }} from \"{pattern}\";$"
+  var current_line_number = 1
+
+  while current_line_number <= line("$")
+    var line_content = getline(current_line_number)
+
+    # Logic for when pattern is found
+    if match(line_content, regex_line) != -1
+      cursor(current_line_number, 1)
+      execute "normal! f}\<left>i, \<right>"
+      startinsert | return
+    endif
+
+    current_line_number += 1
+  endwhile
+
+
+  try
+    execute(':?<script\ lang="ts">')
+    execute($"normal! o\<tab>import {{  }} from \"{pattern}\";\<esc>F\}h")
+    startinsert | return
+  catch
+    echo '<script lang="ts"> tag was not found'
+  endtry
+
+enddef
+autocmd FileType svelte
+      \ command! -nargs=1 ImportFrom
+      \ call ImportFrom(<f-args>)
+
+
 # Find out if the current line is inside a context defined by
 # pattern[0] above and pattern[1] below
 export def FindContext(pattern: list<string>): bool
