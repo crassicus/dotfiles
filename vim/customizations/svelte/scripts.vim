@@ -73,6 +73,42 @@ enddef
 autocmd FileType svelte command! -nargs=* AddAttribute call AddAttribute()
 
 
+
+export def AddProps(): void
+  var current_line_number = 1
+
+  while current_line_number <= line("$")
+    var line_content = getline(current_line_number)
+    if line_content =~ "$props"
+      echo "Props already exist in component"
+      return
+    endif
+    current_line_number += 1
+  endwhile
+
+  current_line_number = line("$")
+  while current_line_number > 0
+    var line_content = getline(current_line_number)
+
+    if match(line_content, $".*\} from '.*';$") != -1 ||
+        match(line_content, '<script lang="ts">') != -1
+
+      cursor(current_line_number, 1)
+      execute($"normal! o{Write("props")}")
+      execute($"normal! >>k>>k>>o")
+      startinsert | return
+    endif
+
+    current_line_number -= 1
+  endwhile
+
+enddef
+autocmd FileType svelte
+      \ command! -nargs=* AddProps
+      \ call AddProps()
+
+
+
 # This function automatically finds or creates import statements
 # in Svelte files for a given module pattern.
 export def ImportFrom(pattern: string): void
@@ -165,6 +201,15 @@ export def Write(method: string): string
         var lines = [
             \ '<script lang="ts">',
             \ '</script>',
+        ]
+        return join(lines, "\n")
+    endif
+
+    if method == "props"
+        var lines = [
+            \ 'interface Props {',
+            \ '}',
+            \ 'let { }: Props = $props();',
         ]
         return join(lines, "\n")
     endif

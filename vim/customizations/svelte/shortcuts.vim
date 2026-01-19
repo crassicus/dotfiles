@@ -15,8 +15,11 @@ autocmd FileType svelte
 
 autocmd FileType svelte
       \ nnoremap <buffer> hr
-      \ ms:ImportFrom $components/index<cr>
+      \ ms:ImportFrom $lib/components/index<cr>
 
+autocmd FileType svelte
+      \ nnoremap <buffer> hp
+      \ ms:AddProps<cr>
 
 # ==== HTML Shortcuts ====
 import "../general/scripts.vim" as utils
