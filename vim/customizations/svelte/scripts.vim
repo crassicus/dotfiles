@@ -1,9 +1,32 @@
 vim9script
 # vim/customizations/svelte/scripts.vim
 
+
+def CreateComponent(components: list<string>)
+  g:components = components
+  py3 << EOF
+
+from forge import create_component
+
+initial_position = vim.eval("expand('%:p')")
+
+for component in vim.eval("g:components"):
+  try:
+      create_component(initial_position, component)
+  except Exception as e:
+      print("{}".format(e))
+
+EOF
+unlet g:components
+enddef
+autocmd FileType svelte
+      \ command! -nargs=* CreateComponent
+      \ call CreateComponent([<f-args>])
+
+
 def ChangeTagContent(): void
-  # Remove the content and place the cursor in insert mode
-  # at the center of the inline tag
+  # Remove the content and place the cursor in insert mode at the
+  # center of the inline tag
   if getline(".") =~ "<.*>.*<\/.*>"
     exec "silent normal! 0/<\\/\<cr>"
     exec "silent normal! cT>\<esc>\<right>"
@@ -90,12 +113,16 @@ export def AddProps(): void
   while current_line_number > 0
     var line_content = getline(current_line_number)
 
-    if match(line_content, $".*\} from '.*';$") != -1 ||
+    if match(line_content, $".*\} from .*;$") != -1 ||
         match(line_content, '<script lang="ts">') != -1
 
       cursor(current_line_number, 1)
-      execute($"normal! o{Write("props")}")
-      execute($"normal! >>k>>k>>o")
+      if expand("%") =~# "\+"
+        execute("normal! olet { }: = $props();\<esc>>>F}")
+      else
+        execute($"normal! o{Write("props")}")
+        execute($"normal! >>k>>k>>o")
+      endif
       startinsert | return
     endif
 

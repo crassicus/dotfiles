@@ -2,6 +2,10 @@ vim9script
 # vim/customizations/svelte/shortcuts.ts
 
 autocmd FileType svelte
+      \ nnoremap <buffer> ha
+      \ :CreateComponent<space>
+
+autocmd FileType svelte
       \ nnoremap <silent> <buffer> c.
       \ :ChangeTagContent<cr>
 
@@ -20,6 +24,7 @@ autocmd FileType svelte
 autocmd FileType svelte
       \ nnoremap <buffer> hp
       \ ms:AddProps<cr>
+
 
 # ==== HTML Shortcuts ====
 import "../general/scripts.vim" as utils
