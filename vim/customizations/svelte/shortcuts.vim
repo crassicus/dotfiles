@@ -38,13 +38,6 @@ autocmd FileType svelte
       \ : "sc"
 
 autocmd FileType svelte
-      \ inoreabbre <expr> <buffer> st
-      \ (!extraScripts.FindContext(['<script lang="ts">', '</script>']) &&
-      \ !extraScripts.FindContext(["<style>", "</style>"])) ?
-      \ utils.Wrapper(extraScripts.Write("style") .. "\<esc>kddpO")
-      \ : "st"
-
-autocmd FileType svelte
       \ inoreabbre <expr> <buffer> ip
       \ (!extraScripts.FindContext(['<script lang="ts">', '</script>']) &&
       \ !extraScripts.FindContext(["<style>", "</style>"])) ?
@@ -251,6 +244,13 @@ autocmd FileType svelte
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
       \ "{<cr>}<esc>O" : "{}<esc>i"
 
+autocmd FileType svelte
+      \ inoreabbre <expr> <buffer> st
+      \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
+      \ utils.Wrapper("let x = $state();<esc>Fxcw") :
+      \ !extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper(extraScripts.Write("style") .. "<esc><<k<<o")
+      \ : "st"
 
 
 # ==== Css shortcuts ====
@@ -439,10 +439,10 @@ autocmd FileType svelte
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
       \ utils.Wrapper("align-self: ;<Esc>i") : "as"
 
-autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> pi
-      \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("place-items: ;<Esc>i") : "pi"
+#autocmd FileType svelte
+      #\ inoreabbrev <expr> <buffer> pi
+      #\ extraScripts.FindContext(["<style>", "</style>"]) ?
+      #\ utils.Wrapper("place-items: ;<Esc>i") : "pi"
 
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> pin
@@ -450,49 +450,64 @@ autocmd FileType svelte
       \ utils.Wrapper("place-inline: ;<Esc>i") : "pin"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> pt
-      \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("padding-block-start: ;<Esc>i") : "pt"
-
-autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> pb
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("padding-block-end: ;<Esc>i") : "pb"
+      \ utils.Wrapper("padding-block: ;<Esc>i") : "pb"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> pbl
+      \ inoreabbrev <expr> <buffer> pbs
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("padding-block: ;<Esc>i") : "pbl"
+      \ utils.Wrapper("padding-block-start: ;<Esc>i") : "pbs"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> pr
+      \ inoreabbrev <expr> <buffer> pbe
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("padding-inline-end: ;<Esc>i") : "pr"
+      \ utils.Wrapper("padding-block-end: ;<Esc>i") : "pbe"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> pl
+      \ inoreabbrev <expr> <buffer> pi
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("padding-inline-start: ;<Esc>i") : "pl"
+      \ utils.Wrapper("padding-inline: ;<Esc>i") : "pi"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> mt
+      \ inoreabbrev <expr> <buffer> pis
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("margin-block-start: ;<Esc>i") : "mt"
+      \ utils.Wrapper("padding-inline-start: ;<Esc>i") : "pis"
+
+autocmd FileType svelte
+      \ inoreabbrev <expr> <buffer> pie
+      \ extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper("padding-inline-end: ;<Esc>i") : "pie"
 
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> mb
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("margin-block-end: ;<Esc>i") : "mb"
+      \ utils.Wrapper("margin-block: ;<Esc>i") : "mb"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> mr
+      \ inoreabbrev <expr> <buffer> mbs
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("margin-inline-end: ;<Esc>i") : "mr"
+      \ utils.Wrapper("margin-block-start: ;<Esc>i") : "mbs"
 
 autocmd FileType svelte
-      \ inoreabbrev <expr> <buffer> ml
+      \ inoreabbrev <expr> <buffer> mbe
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("margin-inline-start: ;<Esc>i") : "ml"
+      \ utils.Wrapper("margin-block-end: ;<Esc>i") : "mbe"
+
+autocmd FileType svelte
+      \ inoreabbrev <expr> <buffer> mi
+      \ extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper("margin-inline: ;<Esc>i") : "mi"
+
+autocmd FileType svelte
+      \ inoreabbrev <expr> <buffer> mis
+      \ extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper("margin-inline-start: ;<Esc>i") : "mis"
+
+autocmd FileType svelte
+      \ inoreabbrev <expr> <buffer> mie
+      \ extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper("margin-inline-end: ;<Esc>i") : "mie"
 
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> ta

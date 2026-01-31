@@ -218,8 +218,8 @@ enddef
 export def Write(method: string): string
     if method == "style"
         var lines = [
-            \ '</style>',
             \ '<style>',
+            \ '</style>',
         ]
         return join(lines, "\n")
     endif
