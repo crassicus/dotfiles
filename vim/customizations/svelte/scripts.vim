@@ -118,7 +118,7 @@ export def AddProps(): void
 
       cursor(current_line_number, 1)
       if expand("%") =~# "\+"
-        execute("normal! olet { }: = $props();\<esc>>>F}")
+        execute("normal! olet {  }: = $props();\<esc>>>F}h")
       else
         execute($"normal! o{Write("props")}")
         execute($"normal! >>k>>k>>o")
@@ -240,6 +240,15 @@ export def Write(method: string): string
         ]
         return join(lines, "\n")
     endif
+
+    if method == "media_query"
+        var lines = [
+                    \ "@media (width >= px) {",
+                    \ "}"
+        ]
+        return join(lines, "\n")
+    endif
+
     return ""
 enddef
 

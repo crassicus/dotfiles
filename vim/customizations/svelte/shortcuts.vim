@@ -172,6 +172,11 @@ autocmd FileType svelte
       \ utils.Wrapper("interface x {}\<Esc>Fxcw") : "int"
 
 autocmd FileType svelte
+      \ inoreabbre <expr> <buffer> de
+      \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
+      \ utils.Wrapper("let x = $derive();<esc>Fxcw") : "de"
+
+autocmd FileType svelte
       \ inoreabbre <expr> <buffer> cf
       \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
       \ utils.Wrapper("const x = () => {};\<Esc>Fxs") : "cf"
@@ -251,6 +256,13 @@ autocmd FileType svelte
       \ !extraScripts.FindContext(["<style>", "</style>"]) ?
       \ utils.Wrapper(extraScripts.Write("style") .. "<esc><<k<<o")
       \ : "st"
+
+autocmd FileType svelte
+      \ inoreabbre <expr> <buffer> me
+      \ extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper(extraScripts.Write("media_query") .. "<esc>k5wi")
+      \ : "me"
+
 
 
 # ==== Css shortcuts ====
