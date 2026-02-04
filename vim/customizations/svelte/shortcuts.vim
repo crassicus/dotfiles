@@ -174,7 +174,7 @@ autocmd FileType svelte
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> de
       \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
-      \ utils.Wrapper("let x = $derive();<esc>Fxcw") : "de"
+      \ utils.Wrapper("let x = $derived();<esc>Fxcw") : "de"
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> cf
