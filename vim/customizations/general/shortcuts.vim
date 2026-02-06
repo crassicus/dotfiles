@@ -24,8 +24,8 @@ nmap ge gk
 
 " ==== Scape ====
 nnoremap a i
+inoremap aa <esc>`^
 vnoremap aa <esc>
-inoremap aa <esc><right>
 
 " ==== Toggle capitalization ====
 nnoremap t, :ToggleWord<cr>
@@ -43,6 +43,7 @@ nnoremap w zz
 
 nnoremap f s
 nnoremap q <C-r>
+nnoremap Q q
 
 " ==== Copy and paste (system clipboard) ====
 vmap <S-y> "+y
