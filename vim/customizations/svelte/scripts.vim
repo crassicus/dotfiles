@@ -243,8 +243,8 @@ export def Write(method: string): string
 
     if method == "media_query"
         var lines = [
-                    \ "@media (width >= px) {",
-                    \ "}"
+            \ "@media (width >= px) {",
+            \ "}"
         ]
         return join(lines, "\n")
     endif

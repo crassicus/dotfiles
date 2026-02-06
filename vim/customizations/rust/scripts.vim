@@ -269,6 +269,41 @@ enddef
 autocmd FileType rust command! -nargs=1 Implement call Implement(<f-args>)
 
 
+export def Scaffold(name: string): void
+    if name == "actix"
+        var lines = [
+            \ '',
+            \ 'use actix_web::{App, HttpServer, web, middleware::Logger};',
+            \ 'use env_logger::{init_from_env, Env};',
+            \ '',
+            \ '#[tokio::main]',
+            \ 'async fn main() -> std::io::Result<()> {',
+            \ '',
+            \ '    init_from_env(Env::default().default_filter_or("debug"));',
+            \ '    HttpServer::new(|| {',
+            \ '        App::new()',
+            \ '            .wrap(Logger::default())',
+            \ '            .route("/", web::get().to(|| async { "Rick Sanchez" }))',
+            \ '    })',
+            \ '    .bind(("127.0.0.1", 8080))?',
+            \ '    .run()',
+            \ '    .await',
+            \ '}',
+            \ ''
+        \ ]
+
+        call append(line('.') - 1, lines)
+        exec "normal! {jj"
+
+    else
+        echo $"{name} is an unknown scaffold"
+
+    endif
+enddef
+autocmd FileType rust command! -nargs=1 Scaffold call Scaffold(<f-args>)
+
+
+
 # ------------------------------------------------
 # Makes single lines public
 # ------------------------------------------------
@@ -308,12 +343,11 @@ def MovesToUseStatements()
     var result = gen.SearchDownwards(['^use\s'])
 
     if result != 0
-        execute "norm! }o"
-        startinsert
-        return
+        execute "norm! }o" | startinsert | return
     endif
 
-    execute "norm! }k"
+    cursor(result, 1)
+    execute("norm! }k$h")
 enddef
 autocmd FileType rust command! -nargs=0 MovesToUseStatements call MovesToUseStatements()
 

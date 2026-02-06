@@ -25,7 +25,7 @@ autocmd FileType rust
       \ :Implement<space>
 
 autocmd FileType rust
-      \ nnoremap <buffer> hr
+      \ nnoremap <silent> <buffer> hr
       \ ms:MovesToUseStatements<CR>
 
 autocmd FileType rust
