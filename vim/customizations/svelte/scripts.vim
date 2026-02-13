@@ -117,8 +117,8 @@ export def AddProps(): void
         match(line_content, '<script lang="ts">') != -1
 
       cursor(current_line_number, 1)
-      if expand("%") =~# "\+"
-        execute("normal! olet {  }: = $props();\<esc>>>F}h")
+      if expand("%") =~# "\+page.svelte"
+        execute("normal! o\timport type { PageProps } from \"./$types\";\<cr>let {  }: PageProps = $props();\<esc>>>F}h")
       else
         execute($"normal! o{Write("props")}")
         execute($"normal! >>k>>k>>o")
