@@ -129,7 +129,7 @@ abbreviations=(
   "ca"  "cargo add"
   "ct"  "cargo test"
 	"cr"  "cargo build --release"
-  "cw"  "cargo watch -x check -x test -x run"
+  "cw"  "cargo watch -x clippy -x test -x run"
 )
 
 function expand-abbreviation() {
