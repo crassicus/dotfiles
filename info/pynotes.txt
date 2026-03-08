@@ -1,6 +1,13 @@
 To set pyrefly
 
+in pyproject.toml
 [tool.pyrefly.errors]
 unannotated-parameter = true
 unannotated-return = true
 implicit-any = true
+
+in pyrefly.toml
+[errors]
+unannotated-parameter = true
+unannotated-return    = true
+implicit-any          = true
