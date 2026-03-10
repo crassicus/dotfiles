@@ -31,4 +31,12 @@ autocmd FileType python
 
 autocmd FileType python
         \ inoreabbrev <expr> <buffer> ifn
-        \ utils.Wrapper("if __name__ == \"__main__\":")
+        \ utils.Wrapper("if __name__ == \"__main__\":<esc><cr>S")
+
+autocmd FileType python
+        \ inoreabbrev <expr> <buffer> cl
+        \ utils.Wrapper("class x:<esc>hs")
+
+autocmd FileType python
+        \ inoreabbrev <expr> <buffer> ic
+        \ utils.Wrapper("def __init__(self, ) -> None:<esc>F,lli")
