@@ -46,22 +46,6 @@ enddef
 command! -nargs=* SearchDownwards call SearchDownwards([<f-args>])
 
 
-def CreateEntry(entries: list<string>)
-    g:entries = entries
-    py3 << EOF
-
-from swiss_knife import create_entry
-
-for entry in vim.eval("g:entries"):
-    try:
-        create_entry(entry)
-    except Exception as e:
-        print(f"{e}")
-EOF
-enddef
-command! -nargs=* CreateEntry call CreateEntry([<f-args>])
-
-
 def ToggleNerdTree(): void
   if g:nerdtree_is_open == true
 
@@ -77,7 +61,7 @@ def ToggleNerdTree(): void
         g:NERDTreeWinSize = float2nr(&columns * 0.30)
     endif
 
-    exec "silent normal! :NERDTree\<cr>"
+    exec "silent normal! :NERDTreeFind\<cr>"
 
     # Mutate global state
     g:nerdtree_is_open = true

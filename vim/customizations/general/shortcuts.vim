@@ -122,9 +122,9 @@ nnoremap G  msG
 nnoremap ht  :
 nnoremap hd  :ALEDetail<cr>
 nnoremap hw  :ALEGoToDefinition<cr>
-nnoremap hf  :CreateEntry<space>
 nnoremap hq  :ALEFindReferences<cr>
 nnoremap hs  :Spaces<cr>
+nnoremap hf  :echo expand("%")<cr>
 nnoremap ti  :BreakBrackets<cr>
 
 cnoreabbrev SS source $MYVIMRC

@@ -25,10 +25,6 @@ autocmd FileType rust
       \ :Implement<space>
 
 autocmd FileType rust
-      \ nnoremap <silent> <buffer> hr
-      \ ms:MovesToUseStatements<CR>
-
-autocmd FileType rust
       \ nnoremap <buffer> tn
       \ ms:RustToggleFunctionReturnType<cr>
 
@@ -56,6 +52,9 @@ autocmd FileType rust
       \ nnoremap <buffer> hht
       \ :!clear; cargo test<cr>
 
+autocmd FileType rust
+      \ nnoremap <buffer> hr
+      \ :CommandFromRoot cargo add<space>
 
 
 # Creates a test interface
@@ -67,7 +66,6 @@ autocmd FileType rust
 
 
 # ==== Semantic shortcuts ====
-
 import "../general/scripts.vim" as utils
 
 autocmd FileType rust
@@ -95,6 +93,10 @@ autocmd FileType rust
       \ utils.Wrapper("struct x {}<esc>Fxcw")
 
 autocmd FileType rust
+      \ inoreabbrev <expr> <buffer> en
+      \ utils.Wrapper("enum x {}<esc>Fxcw")
+
+autocmd FileType rust
       \ inoreabbrev <expr> <buffer> ra
       \ utils.Wrapper("assert!();\<esc>T(i")
 
@@ -109,5 +111,15 @@ autocmd FileType rust
 autocmd FileType rust
       \ inoreabbrev <expr> <buffer> tf
       \ utils.Wrapper("#[test]<cr>fn xx() {<cr>}<up><esc>fxcw")
+
+
+# ==== Command line shortcuts ====
+autocmd FileType rust
+      \ cnoreabbrev <expr> <buffer> scf
+      \ getcmdline() ==# 'scf' ? 'Scaffold' : 'scf'
+
+autocmd FileType rust
+      \ cnoreabbrev <expr> <buffer> imp
+      \ getcmdline() ==# 'imp' ? 'Implement' : 'imp'
 
 defcompile
