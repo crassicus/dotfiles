@@ -299,7 +299,7 @@ autocmd FileType svelte
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> mxw
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
-      \ utils.Wrapper("max-width: ;<Esc>i")
+      \ utils.Wrapper("max-width: ;<Esc>i") : "mxw"
 
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> mxh
