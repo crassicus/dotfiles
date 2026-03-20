@@ -354,6 +354,30 @@ enddef
 autocmd FileType rust command! -nargs=0 MovesToUseStatements call MovesToUseStatements()
 
 
+def CargoAdd(args: list<string>): void
+  g:cargo_args = args
+
+  py3 << EOF
+from swiss_knife import find_root_directory
+from pathlib import Path
+import subprocess
+
+try:
+    args = vim.eval("g:cargo_args")
+    args_str = ' '.join(args)
+    current_file = Path(vim.eval("expand('%:p:h')"))
+    root_directory = find_root_directory(current_file, "Cargo.toml")
+    command = f"cd {root_directory} && cargo add " + args_str
+    vim.eval(f"trim(system('{command}'))")
+
+except Exception as e:
+    vim.command(f"echo '{e}'")
+
+EOF
+enddef
+autocmd FileType rust command! -nargs=* CargoAdd call CargoAdd([<f-args>])
+
+
 # ------------------------------------------------
 # Compile functions
 # ------------------------------------------------

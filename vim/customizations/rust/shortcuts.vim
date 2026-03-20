@@ -54,7 +54,7 @@ autocmd FileType rust
 
 autocmd FileType rust
       \ nnoremap <buffer> hr
-      \ :CommandFromRoot cargo add<space>
+      \ :CargoAdd<space>
 
 
 # Creates a test interface
