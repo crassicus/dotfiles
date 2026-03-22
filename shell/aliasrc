@@ -24,7 +24,7 @@ alias \
 	bd="c $DC/development/development/building" \
 	bk="c $DC/development/development/back" \
 	fr="c $DC/development/development/front" \
-	lr="ln -s /home/disk/rust/info/.cargo ."
+	lr="ln -s /home/disk/rust/info/cargo .cargo"
 
 alias \
   z="zathura-full" \
