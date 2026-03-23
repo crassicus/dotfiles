@@ -16,7 +16,7 @@ autocmd FileType typescriptreact
       \ :TSAddPackage<space>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hv
+      \ nnoremap <buffer> hx
       \ :ToggleTsxToCss<cr>
 
 autocmd FileType typescriptreact

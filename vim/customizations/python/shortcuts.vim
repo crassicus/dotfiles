@@ -2,7 +2,7 @@ vim9script
 
 autocmd FileType python
         \ nnoremap <buffer> hhx
-        \ :!clear; python main.py
+        \ :!clear; uv run main.py
 
 autocmd FileType python
       \ nnoremap <buffer> tn
@@ -28,6 +28,10 @@ autocmd FileType python
 autocmd FileType python
         \ inoreabbrev <expr> <buffer> fn
         \ utils.Wrapper("def ():<esc>F(i")
+
+autocmd FileType python
+        \ inoreabbrev <expr> <buffer> af
+        \ utils.Wrapper("async def ():<esc>F(i")
 
 autocmd FileType python
         \ inoreabbrev <expr> <buffer> ifn

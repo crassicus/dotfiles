@@ -3,46 +3,26 @@ vim9script
 import "../../general/scripts.vim" as gen
 
 # ------------------------------------------------
-#  Creates a React component at src/components
+#  Creates a React/NextJS component at src/components
 # ------------------------------------------------
 def CreateReactComponent(components: list<string>)
   g:components = components
   py3 << EOF
 
-from forge import create_component
+from stacker import create_component
 
 initial_position = vim.eval("expand('%:p')")
 
 for component in vim.eval("g:components"):
   try:
-      create_component(initial_position, component)
+      create_component(component)
   except Exception as e:
-      print("<- 🧨 -> {}".format(e))
+      print("{}".format(e))
 
 EOF
 unlet g:components
 enddef
 autocmd FileType typescriptreact command! -nargs=* CreateComponent call CreateReactComponent([<f-args>])
-
-
-# ------------------------------------------------
-#  Removes a React component from sr/components
-# ------------------------------------------------
-def RemoveReactComponent(components: list<string>)
-  g:components = components
-  py3 << EOF
-
-from forge import delete_component
-for component in vim.eval("g:components"):
-  try:
-      delete_component(component)
-  except Exception as e:
-      print("<- 🧨 -> {}".format(e))
-
-EOF
-unlet g:components
-enddef
-autocmd FileType typescriptreact command! -nargs=* RemoveComponent call RemoveReactComponent([<f-args>])
 
 
 # ------------------------------------------------
@@ -158,55 +138,29 @@ autocmd FileType typescriptreact command! -nargs=0 AddClassName call AddClassNam
 # is called from
 # ------------------------------------------------
 def AddComponentCss()
-  g:current_component_name = expand("%:p")
-  g:success = 1
-  py3 << EOF
-
-from forge import css_file_for_component
-component = vim.eval("g:current_component_name")
-
-try:
-    css_file_for_component(component)
-except Exception as e:
-    print("<- 🧨 -> {}".format(e))
-    # Notify Vimscript about the failure
-    vim.command("g:success = 0")
-
-EOF
-
-  # Return early if there was an exception
-  if g:success == 0 | return | endif
-
-  var filename = fnamemodify(g:current_component_name, ":t")
+  var absolute_path = expand("%:p")
 
   # Change extension from .tsx to .css
-  filename = fnamemodify(filename, ":r") .. ".css"
+  var css_file = fnamemodify(absolute_path, ":r") .. ".module.css"
 
-  # Creates the complete import statement
-  var import_statement = $"import \"./{filename}\";"
+  # Creates CSS file
+  writefile([], css_file)
+
+  # CSS file name
+  var name = fnamemodify(absolute_path, ":t")
+
+  var import_statement = $"import \"./{name}\";"
 
   var view = winsaveview()
+  var current_line = 1
+  while !empty(getline(current_line))
+      current_line += 1
+  endwhile
 
-  # Cursor at last line
-  cursor(line('$'), 1)
-
-  # Search for the first line that contains `import`
-  var result = gen.SearchUpwards(["^import .*"])
-
-  if result == 0
-    execute "normal! o" .. import_statement
-    winrestview(view)
-    return
-  endif
-
-  # When pattern is not found it means it's going
-  # to be the first `import` statement in the current
-  # component.
-  execute "normal! ggo\<esc>0Do" .. import_statement
-
+  cursor(current_line, 1)
+  execute "normal! i" .. import_statement
   winrestview(view)
 
-  unlet g:current_component_name g:success
 enddef
 
 
@@ -282,12 +236,13 @@ def ToggleTsxToCss()
   var message = ""
 
   if extension == "tsx"
-      complete_file_name = fnamemodify(current_file_path, ":r") .. ".css"
+      complete_file_name =
+        fnamemodify(current_file_path, ":r") .. ".module.css"
 
       # Create the CSS file if doesn't exist yet
       if !filereadable(complete_file_name)
         var css_file_name = fnamemodify(complete_file_name, ":t")
-        var answer = input($" 📜 {css_file_name} file is being created, " ..
+        var answer = input($"{css_file_name} file is being created, " ..
              "do you want to continue (y/n): "
         )
         if answer !=# "y" | redraw! | return | endif
@@ -296,15 +251,16 @@ def ToggleTsxToCss()
         message = execute("messages")->split("\n")[-1]
       endif
   else
-      complete_file_name = fnamemodify(current_file_path, ":r") .. ".tsx"
+      complete_file_name = fnamemodify(current_file_path, ":r:r") .. ".tsx"
   endif
 
 
+  #echo $"{complete_file_name}"
   if filereadable(complete_file_name)
     execute $"silent edit {complete_file_name}"
     redraw | echo $"{message}"
   else
-    echo "<- 🧨 -> Target file doesn't exists."
+    echo $"{complete_file_name} doesn't exists."
   endif
 
 enddef
@@ -312,8 +268,8 @@ autocmd FileType typescriptreact,css command! -nargs=* ToggleTsxToCss call Toggl
 
 # ------------------------------------------------
 # Change buffer to principal component
-# In react          -> src/App.tsx
-# In react-router   -> src/route.tsx
+# In React          -> src/App.tsx
+# In Nextjs         -> src/app/page.tsx
 # ------------------------------------------------
 def GoToMainComponent(): void
   py3 << EOF

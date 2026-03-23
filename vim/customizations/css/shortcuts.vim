@@ -297,7 +297,7 @@ autocmd FileType css
 
 # These mappings only apply when working in a React project
 autocmd FileType css
-      \ nnoremap <buffer> hv
+      \ nnoremap <buffer> hx
       \ :ToggleTsxToCss<cr>
 
 autocmd FileType css

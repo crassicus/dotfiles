@@ -23,7 +23,7 @@ let g:ale_linters = {
       \ 'python': ['pyrefly'],
       \ 'svelte': ['svelteserver'],
       \ 'typescript': ['eslint', 'tsserver'],
-      \ 'typescriptreact': ['eslint', 'tsserver'],
+      \ 'typescriptreact': ['biome', 'tsserver'],
       \ }
 
 let g:ale_fixers = {
