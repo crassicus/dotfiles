@@ -49,7 +49,13 @@ export def ImportStructureFrom(pattern: string): void
   endif
 
   var import_statement = $"import {{  }} from \"{pattern}\";"
-  execute "normal! gg}o" .. import_statement .. "\<esc>F}\<left>"
+  var current_line = 1
+  while !empty(getline(current_line))
+      current_line += 1
+  endwhile
+
+  cursor(current_line, 1)
+  execute "normal! i" .. import_statement .. "\<cr>\<esc>\<up>f}\<left>"
   startinsert
 enddef
 autocmd FileType typescriptreact command! -nargs=1 ImportStructureFrom call ImportStructureFrom(<f-args>)

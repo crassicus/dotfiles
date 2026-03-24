@@ -147,7 +147,7 @@ def AddComponentCss()
   writefile([], css_file)
 
   # CSS file name
-  var name = fnamemodify(absolute_path, ":t")
+  var name = fnamemodify(css_file, ":t")
 
   var import_statement = $"import \"./{name}\";"
 
@@ -158,7 +158,7 @@ def AddComponentCss()
   endwhile
 
   cursor(current_line, 1)
-  execute "normal! i" .. import_statement
+  execute "normal! i" .. import_statement .. "\<cr>"
   winrestview(view)
 
 enddef
