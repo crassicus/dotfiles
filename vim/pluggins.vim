@@ -31,7 +31,7 @@ let g:ale_fixers = {
       \ 'rust': ['rustfmt'],
       \ 'python': ['ruff_format'],
       \ 'typescript': ['prettier'],
-      \ 'typescriptreact': ['prettier'],
+      \ 'typescriptreact': ['biome'],
       \ 'css': ["prettier"],
       \ 'html': ["prettier"],
       \ 'svelte': ["prettier"],

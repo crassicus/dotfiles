@@ -141,7 +141,7 @@ def AddComponentCss()
   var absolute_path = expand("%:p")
 
   # Change extension from .tsx to .css
-  var css_file = fnamemodify(absolute_path, ":r") .. ".module.css"
+  var css_file = fnamemodify(absolute_path, ":r") .. ".css"
 
   # Creates CSS file
   writefile([], css_file)
@@ -237,7 +237,7 @@ def ToggleTsxToCss()
 
   if extension == "tsx"
       complete_file_name =
-        fnamemodify(current_file_path, ":r") .. ".module.css"
+        fnamemodify(current_file_path, ":r") .. ".css"
 
       # Create the CSS file if doesn't exist yet
       if !filereadable(complete_file_name)
@@ -255,7 +255,6 @@ def ToggleTsxToCss()
   endif
 
 
-  #echo $"{complete_file_name}"
   if filereadable(complete_file_name)
     execute $"silent edit {complete_file_name}"
     redraw | echo $"{message}"
