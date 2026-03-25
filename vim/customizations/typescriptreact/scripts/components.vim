@@ -312,6 +312,32 @@ def EditAfterTag(): void
 enddef
 autocmd FileType typescriptreact command! -nargs=* EditAfterTag call EditAfterTag()
 
+
+# ------------------------------------------------
+# Toggle async state for component
+# ------------------------------------------------
+def TSXAddAsync()
+    var view = winsaveview()
+    var result = gen.SearchUpwards(["function"])
+    var line_content = getline(".")
+
+    if match(line_content, 'async\s') != -1
+        execute "normal! :s/async\<space>//\<cr>"
+        winrestview(view)
+        return
+    endif
+
+    if result == 0
+        execute "normal! ^fcbiasync \<esc>"
+    else
+        echo "Failed to find pattern."
+    endif
+
+    winrestview(view)
+enddef
+autocmd FileType typescriptreact command! -nargs=0 TSXAddAsync call TSXAddAsync()
+
+
 # ------------------------------------------------
 # Compile functions
 # ------------------------------------------------

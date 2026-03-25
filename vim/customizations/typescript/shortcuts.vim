@@ -10,6 +10,14 @@ autocmd FileType typescript
       \ nnoremap <buffer> hC
       \ ms:ImportTypeFrom react<cr>
 
+autocmd FileType typescript
+      \ nnoremap <buffer> hp
+      \ ms:TsAddExport<cr>
+
+autocmd FileType typescript
+      \ nnoremap <buffer> ha
+      \ ms:TSAddAsync<cr>
+
 
 # ==== Semantics ====
 
@@ -31,6 +39,9 @@ autocmd FileType typescript
       \ inoreabbre <expr> <buffer> co
       \ utils.Wrapper("console.log()\<Esc>i")
 
+autocmd FileType typescript
+      \ inoreabbre <expr> <buffer> af
+      \ utils.Wrapper("async function x() {}\<Esc>Fxcw")
 
 # ==== Aliases ====
 
