@@ -144,7 +144,8 @@ def AddComponentCss()
   var css_file = fnamemodify(absolute_path, ":r") .. ".css"
 
   # Creates CSS file
-  writefile([], css_file)
+  var content = $".{fnamemodify(css_file, ':t:r')} {{}}"
+  writefile([content], css_file)
 
   # CSS file name
   var name = fnamemodify(css_file, ":t")
