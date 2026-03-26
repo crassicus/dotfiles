@@ -1,116 +1,56 @@
 vim9script
 
-import "../../general/scripts.vim" as gen
-import "./extras.vim" as extras
+def ImportFrom(pattern: string, is_type: string = "false"): void
+  var type: bool = is_type == 'true'
 
+  var absolute_pattern: string
+  var insertion: string
 
-# ------------------------------------------------
-# Inserts or updates an ES6-style import statement
-# for a given module. It got to be a structure and
-# not a type
-# ------------------------------------------------
-export def ImportStructureFrom(pattern: string): void
-  cursor(line("$"), 1)
-  var regex_line = $"import {{ .* }} from \"{pattern}\";$"
-  var result = gen.SearchUpwards([regex_line])
-
-  if result == 0
-      execute "normal! f}\<left>i, \<right>"
-      startinsert
-      return
+  if type
+    absolute_pattern = $"^import type {{ .* }} from \"{pattern}\";$"
+    insertion =  "normal! i" .. $"import type {{  }} from \"{pattern}\";"
+  else
+    absolute_pattern = $"^import {{ .* }} from \"{pattern}\";$"
+    insertion =  "normal! i" .. $"import {{  }} from \"{pattern}\";"
   endif
 
-  cursor(line("$"), 1)
-  var multi_regex = $"^\} from \"{pattern}\";$"
-  result = gen.SearchUpwards([multi_regex])
+  var current_line = 1
+  var last_line = line("$")
 
-  if result == 0
-    var import_ = extras.RegexFinder("^import {")
-    var import_type = extras.RegexFinder("^import type {")
-    var closest_upwards = max([import_, import_type])
+  # First look for the import pattern
+  while current_line < last_line
+    var content = getline(current_line)
 
-    if closest_upwards == import_
-        execute "normal! O" .. repeat("\<space>", 1)
-        startinsert
-        return
-
-    else
-      cursor(closest_upwards, 1)
-      var sub_result = gen.SearchUpwards([multi_regex])
-
-      if sub_result == 0
-        execute "normal! O" .. repeat("\<space>", 1)
-        startinsert
-        return
-      endif
-
+    if match(content, absolute_pattern) != -1
+      cursor(current_line, 1)
+      exec "normal! f}hi, \<right>" | startinsert | return
     endif
 
-  endif
-
-  var import_statement = $"import {{  }} from \"{pattern}\";"
-  var current_line = 1
-  while !empty(getline(current_line))
-      current_line += 1
+    current_line += 1
   endwhile
 
-  cursor(current_line, 1)
-  execute "normal! i" .. import_statement .. "\<cr>\<esc>\<up>f}\<left>"
-  startinsert
-enddef
-autocmd FileType typescriptreact command! -nargs=1 ImportStructureFrom call ImportStructureFrom(<f-args>)
+  # In case the first one failed, look for function or an empty spot
+  current_line = 1
+  while current_line < last_line
+    var content = getline(current_line)
 
-# ------------------------------------------------
-# Inserts or updates an ES6-style import statement
-# for a given module. It got to be a type and
-# not a structure
-# ------------------------------------------------
-export def ImportTypeFrom(pattern: string): void
-  # Place the cursor in last row
-  cursor(line("$"), 1)
-
-  # Try first approach
-  var regex_line = $"^import type {{ .* }} from \"{pattern}\";$"
-  var result = gen.SearchUpwards([regex_line])
-  if result == 0
-    execute "normal! f\}\<left>i, \<right>"
-    startinsert
-    return
-  endif
-
-  # Try second approach
-  cursor(line("$"), 1)
-  regex_line = $"^\} from \"{pattern}\";$"
-  result = gen.SearchUpwards([regex_line])
-
-  if result == 0
-    var import_ = extras.RegexFinder("^import {")
-    var import_type = extras.RegexFinder("^import type {")
-    var closest_upwards = max([import_, import_type])
-
-    # Means it is an `import type` indeed
-    if closest_upwards == import_type
-      execute "normal! O" .. repeat("\<space>", 1)
-      startinsert
-      return
-
-    else
-      # Searches upwards again
-      cursor(closest_upwards, 1) # move the cursor upwards
-      result = gen.SearchUpwards([regex_line])
-      if result == 0
-        execute "normal! O" .. repeat("\<space>", 1)
-        startinsert
-        return
-      endif
+    if match(content, 'function \|interface ') != -1
+      cursor(current_line, 1)
+      execute "normal! O"
+      execute insertion .. "\<cr>"
+      execute "normal! kf}h" | startinsert | return
     endif
 
-  endif
+    if empty(content)
+      cursor(current_line, 1)
+      execute insertion .. "\<cr>"
+      execute "normal! kf}h" | startinsert | return
+    endif
 
-  # When import statement doesn't exist yet
-  var import_statement = $"import type {{  }} from \"{pattern}\";"
-  execute "normal! gg}o" .. import_statement .. "\<esc>F}\<left>"
-  startinsert
+    current_line += 1
+  endwhile
 
+  echo "Failed to create import statement"
 enddef
-autocmd FileType typescriptreact command! -nargs=1 ImportTypeFrom call ImportTypeFrom(<f-args>)
+
+autocmd FileType typescriptreact command! -nargs=+ ImportFrom call ImportFrom(<f-args>)

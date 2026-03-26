@@ -8,10 +8,6 @@ autocmd FileType typescriptreact
       \ :CreateComponent<space>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hA
-      \ ms:ImportFromLib<space>
-
-autocmd FileType typescriptreact
       \ nnoremap <buffer> hhc
       \ :TSAddPackage<space>
 
@@ -53,19 +49,19 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> hc
-      \ ms:ImportStructureFrom react<cr>
+      \ ms:ImportFrom react<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> hC
-      \ ms:ImportTypeFrom react<cr>
+      \ ms:ImportFrom react true<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> hr
-      \ ms:ImportStructureFrom @/components/index<cr>
+      \ ms:ImportFrom @/components/index<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> hi
-      \ ms:ImportStructureFrom<space>
+      \ ms:ImportFrom<space>
 
 autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> c.
