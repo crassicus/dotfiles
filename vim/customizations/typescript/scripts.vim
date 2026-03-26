@@ -5,27 +5,35 @@ import "../general/scripts.vim" as gen
 # ------------------------------------------------
 # Toggle export statement
 # ------------------------------------------------
-def TsAddExport()
+def TsAddExport(): void
     var view = winsaveview()
 
-    var result = gen.SearchUpwards(["const", "let", "function", "class", "type", "interface", "enum"])
-    var line_content = getline(".")
+    var patterns = 'function \|interface \|enum \|class \|type '
+    var current_line = line(".")
 
-    if match(line_content, 'export\s') != -1
-        execute "normal! ^dW"
-        winrestview(view)
-        return
-    endif
+    while current_line > 1
+        var content = getline(current_line)
+        if match(content, patterns) != -1
+            cursor(current_line, 1)
 
-    if result == 0
-        execute "normal! Iexport "
-    else
-        echo "Failed to find pattern."
-    endif
+            if match(content, '^export ') != -1
+                execute "normal! dW"
+                winrestview(view) | return
+            endif
 
-    winrestview(view)
+            execute "normal! iexport "
+            winrestview(view) | return
+
+        endif
+        current_line -= 1
+    endwhile
+
+    echo "Failed to find pattern to add export statement."
+
 enddef
-autocmd FileType typescript command! -nargs=0 TsAddExport call TsAddExport()
+autocmd FileType typescript
+      \ command! -nargs=0 TsAddExport
+      \ call TsAddExport()
 
 
 # ------------------------------------------------
