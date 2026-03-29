@@ -1,14 +1,11 @@
 vim9script
 
+
 # ==== Maps ====
 
 autocmd FileType typescript
-      \ nnoremap <buffer> hc
-      \ ms:ImportStructureFrom react<cr>
-
-autocmd FileType typescript
-      \ nnoremap <buffer> hC
-      \ ms:ImportTypeFrom react<cr>
+      \ nnoremap <buffer> hi
+      \ ms:ImportFrom<space>
 
 autocmd FileType typescript
       \ nnoremap <buffer> hp
@@ -42,9 +39,3 @@ autocmd FileType typescript
 autocmd FileType typescript
       \ inoreabbre <expr> <buffer> af
       \ utils.Wrapper("async function x() {}\<Esc>Fxcw")
-
-# ==== Aliases ====
-
-autocmd FileType typescript
-      \ cnoreabbrev <expr> <buffer> pkg
-      \ getcmdline() ==# 'pkg' ? 'TSAddPackage' : 'pkg'

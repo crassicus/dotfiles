@@ -8,10 +8,6 @@ autocmd FileType typescriptreact
       \ :CreateComponent<space>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hhc
-      \ :TSAddPackage<space>
-
-autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> hx
       \ :ToggleTsxToCss<cr>
 

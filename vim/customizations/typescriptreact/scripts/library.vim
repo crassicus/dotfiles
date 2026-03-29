@@ -53,4 +53,6 @@ def ImportFrom(pattern: string, is_type: string = "false"): void
   echo "Failed to create import statement"
 enddef
 
-autocmd FileType typescriptreact command! -nargs=+ ImportFrom call ImportFrom(<f-args>)
+autocmd FileType typescriptreact,typescript
+      \ command! -nargs=+ ImportFrom
+      \ call ImportFrom(<f-args>)
