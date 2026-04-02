@@ -61,4 +61,50 @@ enddef
 autocmd FileType typescript command! -nargs=0 TSAddAsync call TSAddAsync()
 
 
+# ------------------------------------------------
+# Toggle the return type of the function
+# ------------------------------------------------
+def ToggleFunctionReturnType()
+    var position = line(".")
+    while position >= 1
+        var content = getline(position)
+        if match(content, '\(^\|\s\)function\s.*') != -1 | break | endif
+
+        position -= 1
+    endwhile
+
+    if position == 0 | return | endif
+
+    var line_with_function_statement = position
+
+    position = line(".")
+    var last_line = line("$")
+    while position < last_line
+        var content = getline(position)
+        if match(content, '^}') != -1 | break | endif
+
+        position += 1
+    endwhile
+
+    if position == last_line | return | endif
+
+
+    # At this point the cursor is inside a function
+    var view = winsaveview()
+    if match(getline(line_with_function_statement), '):') != -1
+        execute $":{line_with_function_statement}" .. 's/):.*\s{/)\ {/'
+        winrestview(view)
+    else
+        cursor(line_with_function_statement, 1)
+        execute "normal! $F)a:  \<esc>x" | startinsert
+    endif
+
+
+enddef
+autocmd FileType typescript
+            \ command! -nargs=0 ToggleFunctionReturntype
+            \ call ToggleFunctionReturnType()
+
+
+
 defcompile
