@@ -140,12 +140,16 @@ autocmd FileType typescriptreact command! -nargs=0 AddClassName call AddClassNam
 def AddComponentCss()
   var absolute_path = expand("%:p")
 
+  # Read file and extract random class
+  var content = join(readfile(absolute_path), "\n")
+  var random_class = matchstr(content, 'className="\zs[^"]\+\ze"')
+
   # Change extension from .tsx to .css
   var css_file = fnamemodify(absolute_path, ":r") .. ".css"
 
   # Creates CSS file
-  var content = $".{fnamemodify(css_file, ':t:r')} {{}}"
-  writefile([content], css_file)
+  var css_content = $"@scope (.{random_class}) {{}}"
+  writefile([css_content], css_file)
 
   # CSS file name
   var name = fnamemodify(css_file, ":t")
