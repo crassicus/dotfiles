@@ -64,7 +64,7 @@ autocmd FileType typescript command! -nargs=0 TSAddAsync call TSAddAsync()
 # ------------------------------------------------
 # Toggle the return type of the function
 # ------------------------------------------------
-def ToggleFunctionReturnType()
+def SwitchReturnType()
     var position = line(".")
     while position >= 1
         var content = getline(position)
@@ -102,9 +102,8 @@ def ToggleFunctionReturnType()
 
 enddef
 autocmd FileType typescript
-            \ command! -nargs=0 ToggleFunctionReturntype
-            \ call ToggleFunctionReturnType()
-
+        \ command! -nargs=0 SwitchReturnType
+        \ call SwitchReturnType()
 
 
 defcompile

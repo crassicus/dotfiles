@@ -15,6 +15,9 @@ autocmd FileType typescript
       \ nnoremap <buffer> ha
       \ ms:TSAddAsync<cr>
 
+autocmd FileType typescript
+      \ nnoremap <buffer> <silent> tn
+      \ ms:SwitchReturnType<cr>
 
 # ==== Semantics ====
 

@@ -22,7 +22,7 @@ let g:ale_linters = {
       \ 'sh': ['shellcheck'],
       \ 'python': ['pyrefly'],
       \ 'svelte': ['svelteserver'],
-      \ 'typescript': ['eslint', 'tsserver'],
+      \ 'typescript': ['biome', 'eslint', 'tsserver'],
       \ 'typescriptreact': ['biome', 'tsserver'],
       \ }
 
@@ -30,9 +30,9 @@ let g:ale_fixers = {
       \ '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ 'rust': ['rustfmt'],
       \ 'python': ['ruff_format'],
-      \ 'typescript': ['prettier'],
+      \ 'typescript': ['biome', 'prettier'],
       \ 'typescriptreact': ['biome'],
-      \ 'css': ["prettier"],
+      \ 'css': ["biome", "prettier"],
       \ 'html': ["prettier"],
       \ 'svelte': ["prettier"],
       \ }
