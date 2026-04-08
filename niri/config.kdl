@@ -1,4 +1,4 @@
-spawn-at-startup "swaybg" "-i" ".config/wallpaper/wallpaper.png"
+spawn-at-startup "swaybg" "-i" ".config/wallpaper/wallpaper.jpeg"
 
 hotkey-overlay {
     skip-at-startup
@@ -67,6 +67,7 @@ binds {
     Super+T { center-column; }
     Super+M { move-column-left; }
     Super+L { fullscreen-window; }
+    Super+P { toggle-window-floating; }
 
     Super+Space { maximize-column; }
     Super+Comma { switch-preset-column-width; }
@@ -75,8 +76,13 @@ binds {
     Super+Semicolon { expand-column-to-available-width; }
 
     Super+Apostrophe { spawn "wtype" "-P" "Escape" "-p" "Escape"; }
-    Super+P { spawn "wtype" "-M" "ctrl" "c"; }
-    Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    XF86AudioMute { screenshot-window; }
+
+    XF86AudioRaiseVolume {
+        spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%+";
+    }
+    XF86AudioLowerVolume {
+        spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%-";
+    }
 }

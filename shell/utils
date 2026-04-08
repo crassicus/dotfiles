@@ -102,15 +102,3 @@ git() {
             ;;
     esac
 }
-
-
-# ===== Rust =====
-re() {
-	[[ -d "$ROOT/target/release" ]] && \
-      cd "$ROOT/target/release"
-}
-
-de() {
-	[[ -d "$ROOT/target/debug" ]] && \
-      cd "$ROOT/target/debug"
-}
