@@ -67,15 +67,15 @@ binds {
     Super+T { center-column; }
     Super+M { move-column-left; }
     Super+L { fullscreen-window; }
-    Super+P { toggle-window-floating; }
+    Super+P { spawn "wtype" "-M" "ctrl" "c"; }
 
     Super+Space { maximize-column; }
     Super+Comma { switch-preset-column-width; }
     Super+Slash { move-column-to-workspace-down; }
     Super+Period { move-column-to-workspace-up; }
     Super+Semicolon { expand-column-to-available-width; }
-
     Super+Apostrophe { spawn "wtype" "-P" "Escape" "-p" "Escape"; }
+
     Ctrl+Print { screenshot-screen; }
     XF86AudioMute { screenshot-window; }
 
