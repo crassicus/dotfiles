@@ -68,14 +68,13 @@ binds {
     Super+M { move-column-left; }
     Super+L { fullscreen-window; }
     Super+P { spawn "wtype" "-M" "ctrl" "c"; }
-    Super+K { spawn "start_recording"; }
     Super+G { spawn "end_recording"; }
 
     Super+Space { maximize-column; }
     Super+Comma { switch-preset-column-width; }
     Super+Slash { move-column-to-workspace-down; }
     Super+Period { move-column-to-workspace-up; }
-    Super+Semicolon { expand-column-to-available-width; }
+    Super+Semicolon { spawn "start_recording"; }
     Super+Apostrophe { spawn "wtype" "-P" "Escape" "-p" "Escape"; }
 
     Ctrl+Print { screenshot-screen; }
