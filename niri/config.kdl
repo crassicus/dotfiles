@@ -56,8 +56,8 @@ layout {
 }
 
 binds {
-    Super+Return { spawn "alacritty"; }
-    Super+F { spawn "qutebrowser"; }
+    Super+Return repeat=false { spawn "alacritty"; }
+    Super+F repeat=false { spawn "qutebrowser"; }
     Super+S repeat=false { close-window; }
     Super+N { focus-column-left; }
     Super+I { focus-column-right; }
@@ -68,6 +68,8 @@ binds {
     Super+M { move-column-left; }
     Super+L { fullscreen-window; }
     Super+P { spawn "wtype" "-M" "ctrl" "c"; }
+    Super+K { spawn "start_recording"; }
+    Super+G { spawn "end_recording"; }
 
     Super+Space { maximize-column; }
     Super+Comma { switch-preset-column-width; }

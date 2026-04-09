@@ -14,6 +14,7 @@ keymap = [
 
 	# Operation
 	{ on = "o", run = "open", desc = "Open selected files" },
+	{ on = "c", run = "copy path", desc = "Copy the indicator path" },
 	{ on = "y", run = "yank", desc = "Yank selected files (copy)" },
 	{ on = "d", run = "yank --cut", desc = "Yank selected files (cut)" },
 	{ on = "p", run = "paste", desc = "Paste yanked files" },
