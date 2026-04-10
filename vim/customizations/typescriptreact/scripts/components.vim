@@ -26,6 +26,29 @@ autocmd FileType typescriptreact command! -nargs=* CreateComponent call CreateRe
 
 
 # ------------------------------------------------
+#  Creates a NextJS page at src/app
+# ------------------------------------------------
+def CreatePage(pages: list<string>)
+  g:pages = pages
+  py3 << EOF
+
+from stacker import create_page
+
+initial_position = vim.eval("expand('%:p')")
+
+for page in vim.eval("g:pages"):
+  try:
+      create_page(page)
+  except Exception as e:
+      print("{}".format(e))
+
+EOF
+unlet g:pages
+enddef
+autocmd FileType typescriptreact command! -nargs=* CreatePage call CreatePage([<f-args>])
+
+
+# ------------------------------------------------
 #  Add Props statement to the current component
 # ------------------------------------------------
 def AddProps()
