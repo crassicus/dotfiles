@@ -47,7 +47,7 @@ nnoremap Q q
 
 " ==== Copy and paste (system clipboard) ====
 vmap <S-y> "+y
-"nmap <S-p> "+p
+nmap <S-p> "+p
 
 " ==== Save current buffer ====
 nmap vv :w<cr>
