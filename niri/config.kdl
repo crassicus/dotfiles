@@ -1,4 +1,4 @@
-spawn-at-startup "swaybg" "-i" ".config/wallpaper/wallpaper.jpeg"
+spawn-at-startup "swaybg" "-i" ".config/wallpaper/wallpaper.jpg"
 
 hotkey-overlay {
     skip-at-startup
@@ -66,6 +66,7 @@ binds {
     Super+O { toggle-overview; }
     Super+T { center-column; }
     Super+M { move-column-left; }
+    Super+R { move-column-right; }
     Super+L { fullscreen-window; }
     Super+P { spawn "wtype" "-M" "ctrl" "c"; }
     Super+G { spawn "end_recording"; }
