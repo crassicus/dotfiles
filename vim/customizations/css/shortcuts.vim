@@ -48,9 +48,9 @@ autocmd FileType css
       \ inoreabbrev <expr> <buffer> ri
       \ utils.Wrapper("inset-inline-end: ;<Esc>i")
 
-autocmd FileType css
-      \ inoreabbrev <expr> <buffer> to
-      \ utils.Wrapper("inset-block-start: ;<Esc>i")
+#autocmd FileType css
+      ##\ inoreabbrev <expr> <buffer> to
+      #\ utils.Wrapper("inset-block-start: ;<Esc>i")
 
 autocmd FileType css
       \ inoreabbrev <expr> <buffer> bot
@@ -185,40 +185,52 @@ autocmd FileType css
       \ utils.Wrapper("place-inline: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pt
+      \ inoreabbrev <expr> <buffer> pbs
       \ utils.Wrapper("padding-block-start: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pb
+      \ inoreabbrev <expr> <buffer> pbe
       \ utils.Wrapper("padding-block-end: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pbl
+      \ inoreabbrev <expr> <buffer> pb
       \ utils.Wrapper("padding-block: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pr
+      \ inoreabbrev <expr> <buffer> pi
+      \ utils.Wrapper("padding-inline: ;<Esc>i")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> pie
       \ utils.Wrapper("padding-inline-end: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pl
+      \ inoreabbrev <expr> <buffer> pis
       \ utils.Wrapper("padding-inline-start: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> mt
+      \ inoreabbrev <expr> <buffer> mbs
       \ utils.Wrapper("margin-block-start: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> mb
+      \ inoreabbrev <expr> <buffer> mbe
       \ utils.Wrapper("margin-block-end: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> mr
+      \ inoreabbrev <expr> <buffer> mie
       \ utils.Wrapper("margin-inline-end: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> ml
+      \ inoreabbrev <expr> <buffer> mis
       \ utils.Wrapper("margin-inline-start: ;<Esc>i")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> mi
+      \ utils.Wrapper("margin-inline: ;<Esc>i")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> mb
+      \ utils.Wrapper("margin-block: ;<Esc>i")
 
 autocmd FileType css
       \ inoreabbrev <expr> <buffer> ta
