@@ -41,20 +41,8 @@ autocmd FileType css
       \ utils.Wrapper("max-height: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> le
-      \ utils.Wrapper("inset-line-start: ;<Esc>i")
-
-autocmd FileType css
-      \ inoreabbrev <expr> <buffer> ri
-      \ utils.Wrapper("inset-inline-end: ;<Esc>i")
-
-#autocmd FileType css
-      ##\ inoreabbrev <expr> <buffer> to
-      #\ utils.Wrapper("inset-block-start: ;<Esc>i")
-
-autocmd FileType css
-      \ inoreabbrev <expr> <buffer> bot
-      \ utils.Wrapper("inset-block-end: ;<Esc>i")
+      \ inoreabbrev <expr> <buffer> in
+      \ utils.Wrapper("inset: ;<Esc>i")
 
 autocmd FileType css
       \ inoreabbrev <expr> <buffer> ba
@@ -179,10 +167,6 @@ autocmd FileType css
 autocmd FileType css
       \ inoreabbrev <expr> <buffer> pi
       \ utils.Wrapper("place-items: ;<Esc>i")
-
-autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pin
-      \ utils.Wrapper("place-inline: ;<Esc>i")
 
 autocmd FileType css
       \ inoreabbrev <expr> <buffer> pbs
