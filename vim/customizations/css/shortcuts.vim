@@ -165,7 +165,7 @@ autocmd FileType css
       \ utils.Wrapper("align-self: ;<Esc>i")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> pi
+      \ inoreabbrev <expr> <buffer> pli
       \ utils.Wrapper("place-items: ;<Esc>i")
 
 autocmd FileType css
