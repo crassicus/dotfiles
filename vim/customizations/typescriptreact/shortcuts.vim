@@ -8,16 +8,24 @@ autocmd FileType typescriptreact
       \ :CreateComponent<space>
 
 autocmd FileType typescriptreact
+      \ nnoremap <buffer> hA
+      \ :CreatePage<space>
+
+autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> hx
       \ :ToggleTsxToCss<cr>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hb
-      \ :GoToMainComponent<cr>
+      \ nnoremap <buffer> th
+      \ :AddClassName<cr>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> tn
-      \ :AddClassName<cr>
+      \ nnoremap <silent> <buffer> tn
+      \ :bnext<cr>
+
+autocmd FileType typescriptreact
+      \ nnoremap <silent> <buffer> tf
+      \ :%bd\|e#\|bd#<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> to
@@ -30,10 +38,6 @@ autocmd FileType typescriptreact
 autocmd FileType typescriptreact
       \ nnoremap <buffer> tr
       \ ms:JumpToJsxReturn<cr>zz
-
-autocmd FileType typescriptreact
-      \ nnoremap <buffer> tc
-      \ :CommentWord<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> ti
@@ -79,7 +83,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> ip
-      \ utils.Wrapper("<input type=\"text\" id=\"\" />\<Esc>F\"i")
+      \ utils.Wrapper("<input type=\"text\" name=\"\" id=\"\" />\<Esc>F\"i")
 
 autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> h1
@@ -143,7 +147,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> fo
-      \ utils.Wrapper("<form id=\"\">\<Cr></form>\<Esc>O")
+      \ utils.Wrapper("<form id=\"\" action=\"\">\<Cr></form>\<Esc>O")
 
 autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> ah

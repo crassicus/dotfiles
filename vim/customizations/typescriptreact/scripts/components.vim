@@ -293,39 +293,6 @@ def ToggleTsxToCss()
 enddef
 autocmd FileType typescriptreact,css command! -nargs=* ToggleTsxToCss call ToggleTsxToCss()
 
-# ------------------------------------------------
-# Change buffer to principal component
-# In React          -> src/App.tsx
-# In Nextjs         -> src/app/page.tsx
-# ------------------------------------------------
-def GoToMainComponent(): void
-  py3 << EOF
-
-from forge import find_root_directory
-from pathlib import Path
-
-try:
-    current_file_parent_directory = vim.eval("expand('%:p:h')")
-    root_directory = find_root_directory(
-        Path(current_file_parent_directory),
-        "package.json",
-    )
-    react_app_tsx = root_directory / Path("src/App.tsx")
-    react_router_root_tsx = root_directory / Path("app/root.tsx")
-
-    if react_app_tsx.exists():
-      vim.command(f"silent edit {react_app_tsx}")
-    elif react_router_root_tsx.exists():
-      vim.command(f"silent edit {react_router_root_tsx}")
-    else:
-      vim.command("echo 'Neither a React nor a React Router app.'")
-
-except Exception as e:
-    vim.command(f"echo '{e}'")
-EOF
-enddef
-autocmd FileType typescriptreact,css command! -nargs=* GoToMainComponent call GoToMainComponent()
-
 
 # ------------------------------------------------
 # Jumps to the tag content and enters insert mode
