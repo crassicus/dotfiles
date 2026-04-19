@@ -76,7 +76,7 @@ binds {
     Super+Slash { move-column-to-workspace-down; }
     Super+Period { move-column-to-workspace-up; }
     Super+Semicolon { spawn "start_recording"; }
-    Super+Apostrophe { spawn "wtype" "-P" "Escape" "-p" "Escape"; }
+    Super+Apostrophe { spawn "wtype" "-P" "Escape"; }
 
     Ctrl+Print { screenshot-screen; }
     XF86AudioMute { screenshot-window; }
