@@ -337,44 +337,31 @@ enddef
 autocmd FileType rust command! -nargs=0 TakeMeToArgs call TakeMeToArgs()
 
 
+
 # ------------------------------------------------
-# Moves cursor to `use` statements
+# Add packages to the project
 # ------------------------------------------------
-def MovesToUseStatements()
-    execute "norm! gg"
-    var result = gen.SearchDownwards(['^use\s'])
-
-    if result != 0
-        execute "norm! }o" | startinsert | return
-    endif
-
-    cursor(result, 1)
-    execute("norm! }k$h")
-enddef
-autocmd FileType rust command! -nargs=0 MovesToUseStatements call MovesToUseStatements()
-
 
 def CargoAdd(args: list<string>): void
-  g:cargo_args = args
+    var currentFile = expand("%:p:h")
+    var output = system($"sniffer Cargo.toml --origin {currentFile}")
 
-  py3 << EOF
-from swiss_knife import find_root_directory
-from pathlib import Path
-import subprocess
+    if (v:shell_error != 0)
+        echo output | return
+    endif
 
-try:
-    args = vim.eval("g:cargo_args")
-    args_str = ' '.join(args)
-    current_file = Path(vim.eval("expand('%:p:h')"))
-    root_directory = find_root_directory(current_file, "Cargo.toml")
-    command = f"cd {root_directory} && cargo add " + args_str
-    vim.eval(f"trim(system('{command}'))")
+    var srcDir = fnamemodify(output, ":h")
 
-except Exception as e:
-    vim.command(f"echo '{e}'")
+    var command = $"cd {srcDir} && cargo add {join(args, " ")}"
 
-EOF
+    try
+        system(command)
+    catch
+        echo "Failed to add packages."
+    endtry
 enddef
+
+
 autocmd FileType rust command! -nargs=* CargoAdd call CargoAdd([<f-args>])
 
 
