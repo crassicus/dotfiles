@@ -16,12 +16,8 @@ autocmd FileType typescriptreact
       \ :ToggleTsxToCss<cr>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> th
+      \ nnoremap <buffer> tn
       \ :AddClassName<cr>
-
-autocmd FileType typescriptreact
-      \ nnoremap <silent> <buffer> tn
-      \ :bnext<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> tf
@@ -204,7 +200,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> fc
-      \ utils.Wrapper(extraScripts.Write("component") .. "\<Esc>?function\<cr>wi")
+      \ utils.Wrapper(extraScripts.Write("component") .. "\<Esc>?function\<cr>w")
 
 autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> cc
@@ -213,16 +209,7 @@ autocmd FileType typescriptreact
 
 # ==== Aliases ====
 autocmd FileType typescriptreact
-      \ cnoreabbrev <expr> <buffer> lib
-      \ getcmdline() ==# 'lib' ? 'ImportFromLib' : 'lib'
-
-autocmd FileType typescriptreact
       \ cnoreabbrev <expr> <buffer> pkg
       \ getcmdline() ==# 'pkg' ? 'TSAddPackage' : 'pkg'
-
-autocmd FileType typescriptreact
-      \ cnoreabbrev <expr> <buffer> rmc
-      \ getcmdline() ==# 'rmc' ? 'RemoveComponent' : 'rmc'
-
 
 defcompile

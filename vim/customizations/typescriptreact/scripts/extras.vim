@@ -47,11 +47,11 @@ export def Write(method: string): string
 
     if method == "component"
         var lines = [
-            \ 'function () {',
-            \ 'return <>Hello Component</>',
+            \ 'function X() {',
+            \ 'return <div>Hello Component</div>',
             \ '}',
             \ '',
-            \ 'export default x;',
+            \ 'export default X;',
         ]
         return join(lines, "\n")
     endif
@@ -59,7 +59,7 @@ export def Write(method: string): string
     if method == "callback_component"
         var lines = [
             \ 'const  = () => {',
-            \ 'return <>Hello Component</>',
+            \ 'return <div>Hello Component</div>',
             \ '}',
         ]
         return join(lines, "\n")
