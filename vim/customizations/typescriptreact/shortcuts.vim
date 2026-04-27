@@ -4,12 +4,12 @@ vim9script
 # ==== Maps ====
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> ha
+      \ nnoremap <buffer> hr
       \ :CreateComponent<space>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hA
-      \ :CreatePage<space>
+      \ nnoremap <buffer> hR
+      \ :CreateRoute<space>
 
 autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> hx
@@ -52,7 +52,7 @@ autocmd FileType typescriptreact
       \ ms:ImportFrom react true<cr>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hr
+      \ nnoremap <buffer> ha
       \ ms:ImportFrom @/components/index<cr>
 
 autocmd FileType typescriptreact

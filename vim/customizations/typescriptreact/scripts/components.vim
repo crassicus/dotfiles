@@ -28,24 +28,24 @@ autocmd FileType typescriptreact command! -nargs=* CreateComponent call CreateRe
 # ------------------------------------------------
 #  Creates a NextJS page at src/app
 # ------------------------------------------------
-def CreatePage(pages: list<string>)
-  g:pages = pages
+def CreateRoute(routes: list<string>)
+  g:routes = routes
   py3 << EOF
 
-from stacker import create_page
+from stacker import create_route
 
 initial_position = vim.eval("expand('%:p')")
 
-for page in vim.eval("g:pages"):
+for route in vim.eval("g:routes"):
   try:
-      create_page(page)
+      create_route(route)
   except Exception as e:
       print("{}".format(e))
 
 EOF
-unlet g:pages
+unlet g:routes
 enddef
-autocmd FileType typescriptreact command! -nargs=* CreatePage call CreatePage([<f-args>])
+autocmd FileType typescriptreact command! -nargs=* CreateRoute call CreateRoute([<f-args>])
 
 
 # ------------------------------------------------
