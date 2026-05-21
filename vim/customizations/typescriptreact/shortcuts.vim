@@ -63,6 +63,9 @@ autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> c.
       \ :EditAfterTag<cr>
 
+autocmd FileType typescriptreact
+      \ nnoremap <silent> <buffer> t<space>
+      \ /^}$<cr>3kzzo
 
 
 # ==== Semantics ====

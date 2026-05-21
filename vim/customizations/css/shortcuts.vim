@@ -281,6 +281,57 @@ autocmd FileType css
       \ utils.Wrapper("position-area: ;<Esc>i")
 
 
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> bu
+      \ utils.Wrapper("button { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> p
+      \ utils.Wrapper("p { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> di
+      \ utils.Wrapper("div { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> ah
+      \ utils.Wrapper("a { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> sp
+      \ utils.Wrapper("span { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> se
+      \ utils.Wrapper("section { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> na
+      \ utils.Wrapper("na { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> h1
+      \ utils.Wrapper("h1 { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> h2
+      \ utils.Wrapper("h2 { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> h3
+      \ utils.Wrapper("h3 { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> h4
+      \ utils.Wrapper("h4 { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> h5
+      \ utils.Wrapper("h5 { <cr>}<Esc>O")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> na
+      \ utils.Wrapper("na { <cr>}<Esc>O")
 
 # ==== inoremaps ====
 
