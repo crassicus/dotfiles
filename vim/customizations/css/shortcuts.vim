@@ -225,6 +225,14 @@ autocmd FileType css
       \ utils.Wrapper("overflow: ;<Esc>i")
 
 autocmd FileType css
+      \ inoreabbrev <expr> <buffer> oy
+      \ utils.Wrapper("overflow-y: ;<Esc>i")
+
+autocmd FileType css
+      \ inoreabbrev <expr> <buffer> ox
+      \ utils.Wrapper("overflow-x: ;<Esc>i")
+
+autocmd FileType css
       \ inoreabbrev <expr> <buffer> tt
       \ utils.Wrapper("text-transform: ;<Esc>i")
 
@@ -290,7 +298,7 @@ autocmd FileType css
       \ utils.Wrapper("p { <cr>}<Esc>O")
 
 autocmd FileType css
-      \ inoreabbrev <expr> <buffer> di
+      \ inoreabbrev <expr> <buffer> div
       \ utils.Wrapper("div { <cr>}<Esc>O")
 
 autocmd FileType css
