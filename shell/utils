@@ -1,63 +1,10 @@
 #!/bin/bash
 
-# ===== File compression =====
-tarit(){
-  [ -e "$1" ] || {
-      echo "A file or folder is required to continue." >&2
-      return 1
-  }
-
-  # Check if `tar` is installed
-  command -v tar >/dev/null 2>&1 || {
-      echo "Failed to find tar binary" >&2
-      return 1
-  }
-
-  # Check if `pigz` is installed
-  command -v pigz >/dev/null 2>&1 || {
-      echo "Failed to find pigz binary" >&2
-      return 1
-  }
-
-  tar -cf - "$1" | pigz > "$1.tar.gz"
-}
-
-
-untarit(){
-  # Check that a .tar.gz file was passed
-  [[ "$1" == *.tar.gz ]] || {
-      echo "A .tar.gz file is required to continue." >&2
-      return 1
-  }
-
-  # Check that an existing file was passed
-  [ -e "$1" ] || {
-      echo "Failed to find such file." >&2
-      return 1
-  }
-
-  # Check if `tar` is installed
-  command -v tar >/dev/null 2>&1 || {
-      echo "Failed to find tar binary." >&2
-      return 1
-  }
-
-  # Check if `pigz` is installed
-  command -v pigz >/dev/null 2>&1 || {
-      echo "Failed to find pigz binary." >&2
-      return 1
-  }
-
-	tar -I pigz -xf "$1"
-}
-
-
 # ===== Vim =====
 v() {
     command vim "$@"
     cd .
 }
-
 
 # ===== React =====
 ro() {
@@ -101,4 +48,9 @@ git() {
             command git "$@"
             ;;
     esac
+}
+
+# ===== Miss =====
+yy() {
+  wl-copy "c $PWD"
 }
