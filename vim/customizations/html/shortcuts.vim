@@ -14,7 +14,7 @@ autocmd FileType html
 
 autocmd FileType html
       \ inoreabbre <expr> <buffer> ip
-      \ utils.Wrapper("<input type=\"text\" id=\"\" />\<Esc>F\"i")
+      \ utils.Wrapper("<input type=\"text\" id=\"\" name=\"\" />\<Esc>F\"i")
 
 autocmd FileType html
       \ inoreabbre <expr> <buffer> h1

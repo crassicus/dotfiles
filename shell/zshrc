@@ -58,7 +58,7 @@ function custom_prompt() {
 
 # Precmd hook to update PS1 before every command
 function precmd() {
-  PS1="🦀$(custom_prompt) -> "
+  PS1="%F{#d65d0e} %f%F{#458588} %f%F{#aeabd1} %f$(custom_prompt)  "
 }
 
 [[ -f ~/.aliasrc ]] && source ~/.aliasrc

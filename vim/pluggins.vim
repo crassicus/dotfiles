@@ -31,7 +31,7 @@ let g:ale_fixers = {
       \ 'rust': ['rustfmt'],
       \ 'python': ['ruff_format'],
       \ 'typescript': ['biome', 'prettier'],
-      \ 'typescriptreact': ['biome'],
+      \ 'typescriptreact': ['biome', 'prettier'],
       \ 'css': ["biome", "prettier"],
       \ 'html': ["prettier"],
       \ 'svelte': ["prettier"],
@@ -94,3 +94,5 @@ let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden ' .
       \ '--exclude .git ' .
       \ '--exclude node_modules ' .
       \ '--exclude .next'
+
+autocmd BufEnter *.py ALEStopAllLSPs | ALELint

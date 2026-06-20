@@ -4,7 +4,6 @@ source ~/.vim/customizations/typescriptreact/shortcuts.vim
 source ~/.vim/customizations/typescriptreact/scripts/components.vim
 source ~/.vim/customizations/typescriptreact/scripts/library.vim
 source ~/.vim/customizations/typescriptreact/scripts/extras.vim
-source ~/.vim/customizations/typescriptreact/scripts/import_from_library.vim
 source ~/.vim/customizations/rust/shortcuts.vim
 source ~/.vim/customizations/rust/scripts.vim
 source ~/.vim/customizations/python/shortcuts.vim
