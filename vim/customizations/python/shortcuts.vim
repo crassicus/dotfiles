@@ -5,8 +5,12 @@ autocmd FileType python
         \ :!clear; uv run main.py
 
 autocmd FileType python
-      \ nnoremap <buffer> tn
+      \ nnoremap <silent> <buffer> tn
       \ ms:ToggleFnReturnType<cr>
+
+autocmd FileType python
+      \ nnoremap <silent> <buffer> ts
+      \ ms:TakeMeToFnArgs<cr>
 
 # autocmd FileType
 #         \ python xmap kk

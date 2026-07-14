@@ -37,3 +37,24 @@ def ToggleFnReturnType(): void
 
 enddef
 autocmd FileType python command! -nargs=0 ToggleFnReturnType call ToggleFnReturnType()
+
+
+def TakeMeToFnArgs(): void
+  var current_line = line(".")
+
+  while current_line >= 1
+    var line_content = getline(current_line)
+
+    var matching = match(line_content, '\vdef\s\w+\(')
+    if matching != -1
+      cursor(current_line, 1)
+      search(')', 'c')
+      return
+    endif
+
+    current_line -= 1
+  endwhile
+enddef
+autocmd FileType python
+            \ command! -nargs=0 TakeMeToFnArgs
+            \ call TakeMeToFnArgs()
