@@ -65,6 +65,10 @@ autocmd FileType rust
       \ fn xx() {<cr>}<cr>}<up><up><esc>fxcw
 
 
+autocmd FileType rust
+      \ inoremap <buffer> " '
+
+
 # ==== Semantic shortcuts ====
 import "../general/scripts.vim" as utils
 
@@ -97,7 +101,7 @@ autocmd FileType rust
       \ utils.Wrapper("enum x {}<esc>Fxcw")
 
 autocmd FileType rust
-      \ inoreabbrev <expr> <buffer> ra
+      \ inoreabbrev <expr> <buffer> ass
       \ utils.Wrapper("assert!();\<esc>T(i")
 
 autocmd FileType rust
