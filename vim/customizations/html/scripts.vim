@@ -1,5 +1,7 @@
 vim9script
 
+# HTML scripts
+
 export def Write(method: string): string
     if method == "scaffold"
         var lines = [
@@ -42,5 +44,23 @@ export def Write(method: string): string
     endif
     return ""
 enddef
+
+# Move the cursor before `>` to add an attribute
+# ----------------------------------------------
+def AddAttribute(): void
+    var line_content = getline(".")
+    var matching = match(line_content, '=\@<!>')
+
+    if matching != -1
+        cursor(line("."), matching + 1)
+        startinsert | feedkeys(" ") | return
+    endif
+
+    echo "Cannot move cursor to add attribute: pattern not found"
+enddef
+autocmd FileType html,htmldjango
+      \ command! -nargs=* AddAttribute
+      \ call AddAttribute()
+
 
 defcompile
