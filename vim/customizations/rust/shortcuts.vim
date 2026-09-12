@@ -13,24 +13,16 @@ autocmd FileType rust
       \ ms:ToggleMut<cr>
 
 autocmd FileType rust
-      \ nnoremap <buffer> hm
-      \ :RustAddMacro<cr>
+      \ nnoremap <buffer> <silent> hc
+      \ ms:ToggleVariable<cr>
 
 autocmd FileType rust
-      \ nnoremap <buffer> hc
-      \ ms:ToggleLeadingUnderscore<cr>
+      \ nnoremap <buffer> <silent> tn
+      \ ms:ToggleFnReturnType<cr>
 
 autocmd FileType rust
       \ nnoremap <buffer> hi
       \ :Implement<space>
-
-autocmd FileType rust
-      \ nnoremap <buffer> tn
-      \ ms:RustToggleFunctionReturnType<cr>
-
-autocmd FileType rust
-      \ nnoremap <buffer> tc
-      \ :CommentWord<CR>
 
 autocmd FileType rust
       \ nnoremap <buffer> tp

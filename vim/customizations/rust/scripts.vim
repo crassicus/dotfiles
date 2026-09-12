@@ -82,23 +82,6 @@ enddef
 autocmd FileType rust command! -nargs=0 ToggleAsync call ToggleAsync()
 
 
-# ------------------------------------------------
-# Add a macro to a function or structure
-# ------------------------------------------------
-def RustAddMacro()
-    var result = gen.SearchUpwards(["fn", "struct", "enum"])
-    var line_content = getline('.')
-
-    if result == 0
-        execute "normal! O#[]"
-        startinsert
-    else
-        echo "Failed to find pattern."
-    endif
-enddef
-autocmd FileType rust command! -nargs=0 RustAddMacro call RustAddMacro()
-
-
 # Toggle the variable in the current line
 # ---------------------------------------
 def ToggleVariable(): void
@@ -194,74 +177,50 @@ autocmd FileType rust
     \ call ToggleMut()
 
 
-# ------------------------------------------------
 # Toggle the return type of a function
-# ------------------------------------------------
-def RustToggleFunctionReturnType()
+# -------------------------------------
+def ToggleFnReturnType(): void
     var view = winsaveview()
-    var result = gen.SearchUpwards(['fn\s.*'])
-    var line_content = getline('.')
+    var current_line = line(".")
 
-    if result == -1
-        echo "Failed to find function pattern."
-        winrestview(view)
-        return
-    endif
+    var keywords = 'fn\s'
 
-    if match(line_content, '{') == -1
-        exe "normal! /^)\<cr>"
-        line_content = getline('.')
-    endif
-
-
-    if match(line_content, '{') != -1 && match(line_content, 'fn(.*)\s\->') != -1
-
-        var arrow_matches = gen.CountMatches(line_content, '\->')
-        var fn_matches = gen.CountMatches(line_content, 'fn(.*)\s\->')
-
-        if arrow_matches == fn_matches
-            # There's not return signature
-            exe "normal! $F)a\<space>->\<space>\<right>"
-            startinsert
-        else
-            # There's return signature
-            exe "normal! $F-dt{"
-            winrestview(view)
+    # Search upwards for `fn `
+    while current_line >= 1
+        var line_content = getline(current_line)
+        if match(line_content, keywords) != -1
+            break
         endif
 
-        return
+        current_line -= 1
+    endwhile
+
+    # Reaching line zero means `fn ` was not found
+    if current_line == 0
+        echo "Cannot toggle fn return type: no `fn` found above." | return
     endif
 
-    if match(line_content, '{') != -1 && match(line_content, 'fn(.*)\s\->') == -1
+    var line_content = getline(current_line)
 
-        if match(line_content, '\->') != -1
-            exe "normal! ^f-dt{"
-            winrestview(view)
-        else
-            exe "normal! ^f{F)a\<space>->\<space>\<right>"
-            startinsert
-        endif
-        return
+    if match(line_content, 'fn \w\+(.*) {') != -1
+        execute $':{current_line}normal! $i->  '
+        startinsert | return
     endif
 
-
-    if match(line_content, '\->') != -1
-        if match(line_content, 'where') != -1
-            exe "normal! ^f-d/where\<cr>"
-            winrestview(view)
-        else
-            exe "normal! ^f-d$"
-            winrestview(view)
-        endif
-    else
-        exe "normal! ^a\<space>->\<space>\<right>"
-        startinsert
+    if match(line_content, 'fn \w\+(.*) -> .* {') != -1
+        execute $':{current_line}' .. 'normal! $F-dt{'
     endif
+
+    winrestview(view)
 
 enddef
-autocmd FileType rust command! -nargs=0 RustToggleFunctionReturnType call RustToggleFunctionReturnType()
+autocmd FileType rust
+    \ command! -nargs=0 ToggleFnReturnType
+    \ call ToggleFnReturnType()
 
 
+# Writes a given scaffold from current position
+# ---------------------------------------------
 export def Scaffold(name: string): void
     if name == "actix"
         var lines = [
