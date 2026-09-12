@@ -31,7 +31,7 @@ def TogglePub(): void
 
     var line_content = getline(current_line)
 
-    # If `pub` or `pub(crate )`is present, remove it from the current line
+    # If `pub` or `pub(crate )` is present, remove it from the current line
     if match(line_content, 'pub\s\|pub(crate)\s') != -1
         execute $':{current_line}normal! ^dW'
         winrestview(view) | return
@@ -46,16 +46,16 @@ autocmd FileType rust command! -nargs=0 TogglePub call TogglePub()
 
 # Toggle `async` on the nearest `fn` above
 # ------------------------------------------------
-def ToggleAsync()
+def ToggleAsync(): void
     var view = winsaveview()
     var current_line = line(".")
 
-    var words = 'fn\s'
+    var keywords = 'fn\s'
 
     # Search upwards for `fn `
     while current_line >= 1
         var line_content = getline(current_line)
-        if match(line_content, words) != -1
+        if match(line_content, keywords) != -1
             break
         endif
 
@@ -99,65 +99,99 @@ enddef
 autocmd FileType rust command! -nargs=0 RustAddMacro call RustAddMacro()
 
 
-# ------------------------------------------------
-# Toggle underscore to suppress/restore unused warning
-# ------------------------------------------------
-def ToggleLeadingUnderscore(): void
-    var view = winsaveview()
+# Toggle the variable in the current line
+# ---------------------------------------
+def ToggleVariable(): void
+    var current_col = col('.')
+    var current_line = line('.')
     var line_content = getline('.')
 
-    # Case it's a mutable variable but not commented
-    if match(line_content, '\s*let\smut\s[^_][a-z0-9_\:]\+\s.*=') != -1
-        exec "normal! ^WWi_"
-        winrestview(view)
-        return
+    var matching = match(line_content, '\<let\> \<mut\> _')
+
+    if matching >= 0
+        execute "normal! ^wwx"
+        if current_col > (matching + 9)
+            cursor(current_line, current_col - 1) | return
+        endif
+
+        cursor(current_line, current_col) | return
     endif
 
-    # Case it's a mutable variable but commented
-    if match(line_content, '\s*let\smut\s[a-z0-9_\:]\+\s.*=') != -1
-        exec "normal! ^WWx"
-        winrestview(view)
-        return
+    matching = match(line_content, '\<let\> \<mut\> ')
+
+    if matching >= 0
+        execute "normal! ^wwi_"
+        if current_col > (matching + 8)
+            cursor(current_line, current_col + 1) | return
+        endif
+
+        cursor(current_line, current_col) | return
     endif
 
-    # Case it's just not commented
-    if match(line_content, '\s*let\s[^_][a-z0-9_\:]\+\s.*=') != -1
-        exec "normal! ^Wi_"
-        winrestview(view)
-        return
+    matching = match(line_content, '\<let\> _')
+
+    if matching >= 0
+        execute "normal! ^wx"
+        if current_col > (matching + 5)
+            cursor(current_line, current_col - 1) | return
+        endif
+
+        cursor(current_line, current_col) | return
     endif
 
-    # Case it's commented
-    if match(line_content, '\s*let\s[a-z0-9_\:]\+\s.*=') != -1
-        exec "normal! ^Wx"
-        winrestview(view)
-        return
+    matching = match(line_content, '\<let\>')
+
+    if matching >= 0
+        execute "normal! ^wi_"
+        if current_col > (matching + 4)
+            cursor(current_line, current_col + 1) | return
+        endif
+
+        cursor(current_line, current_col) | return
     endif
 
-    echo "-> Failed to find pattern..."
-
+    echo "Can't comment variable: no pattern was found in current line."
 enddef
-autocmd FileType rust command! -nargs=0 ToggleLeadingUnderscore call ToggleLeadingUnderscore()
+autocmd FileType rust
+    \ command! -nargs=0 ToggleVariable
+    \ call ToggleVariable()
 
 
+# Toggle mutability of the current line's variable
 # ------------------------------------------------
-# Toggle variable mutability
-# ------------------------------------------------
-def RustToggleMutability()
+def ToggleMut(): void
+    var current_col = col('.')
+    var current_line = line('.')
     var line_content = getline('.')
 
-    if match(line_content, 'let\smut') != -1
-        execute "normal! ^wdiwx\<esc>`s4\<left>"
+    var matching = match(line_content, 'let\smut\s')
+    if matching != -1
+        execute ":s/let mut/let/"
 
-    elseif match(line_content, 'let') != -1
-        execute "normal! ^wimut\<space>\<esc>`s4\<right>"
+        if current_col >= (matching + 7)
+            cursor(current_line, current_col - 4) | return
+        endif
 
-    else
-        echo "Failed to find pattern."
+        cursor(current_line, current_col) | return
     endif
 
+    matching = match(line_content, 'let\s')
+
+    if matching != -1
+        execute ":s/let/let mut/"
+
+        if current_col > (matching + 4)
+            cursor(current_line, current_col + 4) | return
+        endif
+
+        cursor(current_line, current_col) | return
+    endif
+
+    echo "Cannot toggle mut: no valid pattern found."
 enddef
-autocmd FileType rust command! -nargs=0 RustToggleMutability call RustToggleMutability()
+autocmd FileType rust
+    \ command! -nargs=0 ToggleMut
+    \ call ToggleMut()
 
 
 # ------------------------------------------------

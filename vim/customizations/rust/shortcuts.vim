@@ -9,12 +9,12 @@ autocmd FileType rust
       \ :ToggleAsync<cr>
 
 autocmd FileType rust
-      \ nnoremap <buffer> hm
-      \ :RustAddMacro<cr>
+      \ nnoremap <buffer> <silent> hx
+      \ ms:ToggleMut<cr>
 
 autocmd FileType rust
-      \ nnoremap <buffer> hx
-      \ ms:RustToggleMutability<cr>
+      \ nnoremap <buffer> hm
+      \ :RustAddMacro<cr>
 
 autocmd FileType rust
       \ nnoremap <buffer> hc
