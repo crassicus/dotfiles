@@ -119,9 +119,12 @@ autocmd FileType htmldjango
 
 # nnoremaps
 autocmd FileType html,htmldjango
-      \ nnoremap <buffer> to
+      \ nnoremap <buffer> <silent> to
       \ :AddAttribute<cr>
 
+autocmd FileType html,htmldjango
+      \ nnoremap <buffer> <silent> c.
+      \ :EditAfterTag<cr>
 
 # inoreabbres
 import "./scripts.vim" as htmlScripts

@@ -63,4 +63,23 @@ autocmd FileType html,htmldjango
       \ call AddAttribute()
 
 
+# Move the cursor after `>`, remove what's inside adn leave insert cursor
+# ----------------------------------------------
+def EditAfterTag(): void
+    var line_content = getline(".")
+    var matching = match(line_content, '<.*>.*<\/.*>')
+
+    if matching != -1
+        var right_anchor = match(line_content, '=\@<!>')
+        cursor(line("."), right_anchor + 2)
+        execute "normal! dt<" | startinsert | return
+    endif
+
+    echo "Cannot edit after tag: pattern not found"
+enddef
+autocmd FileType html,htmldjango
+      \ command! -nargs=* EditAfterTag
+      \ call EditAfterTag()
+
+
 defcompile
