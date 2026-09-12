@@ -25,12 +25,12 @@ autocmd FileType rust
       \ :Implement<space>
 
 autocmd FileType rust
-      \ nnoremap <buffer> tp
+      \ nnoremap <buffer> <silent> tp
       \ ms:AddSingularPublic<cr>
 
 autocmd FileType rust
-      \ nnoremap <buffer> ts
-      \ ms:TakeMeToArgs<cr>
+      \ nnoremap <buffer> <silent> ts
+      \ ms:GoToFnArgs<cr>
 
 autocmd FileType rust
       \ nnoremap <buffer> ti

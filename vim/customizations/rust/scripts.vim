@@ -257,7 +257,8 @@ enddef
 autocmd FileType rust command! -nargs=1 Scaffold call Scaffold(<f-args>)
 
 
-
+# Writes lines for trait implementations
+#---------------------------------------
 export def Write(method: string): string
     if method == "asref"
         var lines = [
@@ -322,7 +323,6 @@ export def Write(method: string): string
 enddef
 
 
-# ------------------------------------------------
 # Makes single lines public
 # ------------------------------------------------
 def AddSingularPublic()
@@ -334,13 +334,14 @@ def AddSingularPublic()
     endif
 
 enddef
-autocmd FileType rust command! -nargs=0 AddSingularPublic call AddSingularPublic()
+autocmd FileType rust
+    \ command! -nargs=0 AddSingularPublic
+    \ call AddSingularPublic()
 
 
+# Move the cursor to the function arguments
 # ------------------------------------------------
-# Jumps the cursor to args part of a function
-# ------------------------------------------------
-def TakeMeToArgs()
+def GoToFnArgs()
     var result = gen.SearchUpwards(['fn\s'])
 
     if result == 0
@@ -350,13 +351,11 @@ def TakeMeToArgs()
         echo "Failed to find pattern."
     endif
 enddef
-autocmd FileType rust command! -nargs=0 TakeMeToArgs call TakeMeToArgs()
+autocmd FileType rust command! -nargs=0 GoToFnArgs call GoToFnArgs()
 
 
-# ------------------------------------------------
 # Add packages to the project
 # ------------------------------------------------
-
 def CargoAdd(args: list<string>): void
     var currentFile = expand("%:p:h")
     var output = system($"sniffer Cargo.toml --origin {currentFile}")
@@ -375,12 +374,11 @@ def CargoAdd(args: list<string>): void
         echo "Failed to add packages."
     endtry
 enddef
+autocmd FileType rust
+    \ command! -nargs=* CargoAdd
+    \ call CargoAdd([<f-args>])
 
 
-autocmd FileType rust command! -nargs=* CargoAdd call CargoAdd([<f-args>])
-
-
-# ------------------------------------------------
 # Compile functions
 # ------------------------------------------------
 defcompile
