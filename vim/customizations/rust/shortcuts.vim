@@ -1,12 +1,12 @@
 vim9script
 
 autocmd FileType rust
-      \ nnoremap <buffer> hp
-      \ :RustAddPublic<cr>
+      \ nnoremap <buffer> <silent> hp
+      \ :TogglePub<cr>
 
 autocmd FileType rust
-      \ nnoremap <buffer> ha
-      \ :RustAddAsync<cr>
+      \ nnoremap <buffer> <silent> ha
+      \ :ToggleAsync<cr>
 
 autocmd FileType rust
       \ nnoremap <buffer> hm
@@ -55,14 +55,6 @@ autocmd FileType rust
 autocmd FileType rust
       \ nnoremap <buffer> hr
       \ :CargoAdd<space>
-
-
-# Creates a test interface
-autocmd FileType rust
-      \ inoremap <buffer> kkt
-      \ #[cfg(test)]<cr>
-      \ mod tests {<cr>use super::*;<cr><cr><left><space>#[test]<cr><left><space>
-      \ fn xx() {<cr>}<cr>}<up><up><esc>fxcw
 
 
 autocmd FileType rust
@@ -117,13 +109,33 @@ autocmd FileType rust
       \ utils.Wrapper("#[test]<cr>fn xx() {<cr>}<up><esc>fxcw")
 
 
+import "./scripts.vim" as rustScripts
+
+autocmd FileType rust
+      \ inoreabbre <expr> <buffer> iasref
+      \ utils.Wrapper(rustScripts.Write("asref") .. "\<Esc>3kfT")
+
+autocmd FileType rust
+      \ inoreabbre <expr> <buffer> ideref
+      \ utils.Wrapper(rustScripts.Write("deref") .. "\<Esc>5kfV")
+
+autocmd FileType rust
+      \ inoreabbre <expr> <buffer> ifrom
+      \ utils.Wrapper(rustScripts.Write("from") .. "\<Esc>3kfT")
+
+autocmd FileType rust
+      \ inoreabbre <expr> <buffer> idisplay
+      \ utils.Wrapper(rustScripts.Write("display") .. "\<Esc>5kfT")
+
+autocmd FileType rust
+      \ inoreabbre <expr> <buffer> itest
+      \ utils.Wrapper(rustScripts.Write("test") .. "\<Esc>3kf(i")
+
+
 # ==== Command line shortcuts ====
 autocmd FileType rust
       \ cnoreabbrev <expr> <buffer> scf
       \ getcmdline() ==# 'scf' ? 'Scaffold' : 'scf'
 
-autocmd FileType rust
-      \ cnoreabbrev <expr> <buffer> imp
-      \ getcmdline() ==# 'imp' ? 'Implement' : 'imp'
 
 defcompile

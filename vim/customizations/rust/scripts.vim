@@ -1,60 +1,85 @@
 vim9script
 
-# ==== Rust Scripts ====
+# Rust scripts
 
+# Imports
 import "../general/scripts.vim" as gen
 
-# ------------------------------------------------
-# Toggle visibility state for the expression
-# ------------------------------------------------
-def RustAddPublic()
+
+# Toggle `pub` or `pub(crate)` on the nearest keyword above
+# ---------------------------------------------------------
+def TogglePub(): void
     var view = winsaveview()
+    var current_line = line(".")
 
-    var result = gen.SearchUpwards(['fn\s', 'struct', 'trait', 'enum', 'type'])
-    var line_content = getline(".")
+    var keywords = 'fn\s\|struct\|trait\|enum\|type'
 
-    # If `pub` was found in current line
+    # Search upwards for any of the `keywords`
+    while current_line >= 1
+        var line_content = getline(current_line)
+        if match(line_content, keywords) != -1
+            break
+        endif
+
+        current_line -= 1
+    endwhile
+
+    # Reaching line zero means no `keyword` was found
+    if current_line == 0
+        echo "Cannot toggle pub: no valid keyword was found above." | return
+    endif
+
+    var line_content = getline(current_line)
+
+    # If `pub` or `pub(crate )`is present, remove it from the current line
     if match(line_content, 'pub\s\|pub(crate)\s') != -1
-        execute "normal! ^dW"
-        winrestview(view)
-        return
+        execute $':{current_line}normal! ^dW'
+        winrestview(view) | return
     endif
 
-    if result == 0
-        execute "normal! Ipub "
-    else
-        echo "Failed to find pattern."
-    endif
+    execute $':{current_line}normal! Ipub '
 
     winrestview(view)
 enddef
-autocmd FileType rust command! -nargs=0 RustAddPublic call RustAddPublic()
+autocmd FileType rust command! -nargs=0 TogglePub call TogglePub()
 
 
+# Toggle `async` on the nearest `fn` above
 # ------------------------------------------------
-# Toggle async state for the function
-# ------------------------------------------------
-def RustAddAsync()
+def ToggleAsync()
     var view = winsaveview()
-    var result = gen.SearchUpwards(["fn"])
-    var line_content = getline(".")
+    var current_line = line(".")
 
-    # if Async was found in current line
+    var words = 'fn\s'
+
+    # Search upwards for `fn `
+    while current_line >= 1
+        var line_content = getline(current_line)
+        if match(line_content, words) != -1
+            break
+        endif
+
+        current_line -= 1
+    endwhile
+
+    # Reaching line zero means `fn ` was not found
+    if current_line == 0
+        echo "Cannot toggle async: no `fn` found above." | return
+    endif
+
+    var line_content = getline(current_line)
+
+    # If `async` is present, remove it from the current line
     if match(line_content, 'async\s') != -1
-        execute "normal! :s/async\<space>//\<cr>"
-        winrestview(view)
-        return
+        execute $':{current_line}s/async //'
+        winrestview(view) | return
     endif
 
-    if result == 0
-        execute "normal! ^fn\<left>iasync \<esc>"
-    else
-        echo "Failed to find pattern."
-    endif
+    execute $':{current_line}normal! ffiasync '
 
     winrestview(view)
 enddef
-autocmd FileType rust command! -nargs=0 RustAddAsync call RustAddAsync()
+autocmd FileType rust command! -nargs=0 ToggleAsync call ToggleAsync()
 
 
 # ------------------------------------------------
@@ -203,72 +228,6 @@ enddef
 autocmd FileType rust command! -nargs=0 RustToggleFunctionReturnType call RustToggleFunctionReturnType()
 
 
-# ------------------------------------------------
-# Scaffold for implementing the given trait
-# ------------------------------------------------
-def Implement(trait: string)
-    if trait == "from"
-        var lines = [
-            \ '',
-            \ 'impl From<T> for V {',
-            \ 'fn from(value: T) -> Self {}',
-            \ '}',
-            \ ''
-        \ ]
-
-        execute "normal! i" .. join(lines, "\n")
-        execute "normal! kkkfT"
-
-    elseif trait == "asref"
-        var lines = [
-            \ '',
-            \ 'impl AsRef<T> for V {',
-            \ 'fn as_ref(&self) -> &T {}',
-            \ '}',
-            \ ''
-        \ ]
-
-        execute "normal! i" .. join(lines, "\n")
-        execute "normal! {jfT"
-
-    elseif trait == "deref"
-        var lines = [
-            \ '',
-            \ 'impl Deref for V {',
-            \ 'type Target = T;',
-            \ '',
-            \ 'fn deref(&self) -> &Self::Target {}',
-            \ '}',
-            \ ''
-        \ ]
-
-        execute "normal! i" .. join(lines, "\n")
-        execute "normal! {{jfVx"
-        startinsert
-
-    elseif trait == "display"
-        var lines = [
-            \ '',
-            \ 'impl fmt::Display for T {',
-            \ "fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {",
-            \ 'write!(f, "{}", self.x)',
-            \ '}',
-            \ '}',
-            \ ''
-        \ ]
-
-        execute "normal! i" .. join(lines, "\n")
-        execute "normal! {jfTx"
-        startinsert
-
-    else
-        echo "Unknown implementation."
-    endif
-
-enddef
-autocmd FileType rust command! -nargs=1 Implement call Implement(<f-args>)
-
-
 export def Scaffold(name: string): void
     if name == "actix"
         var lines = [
@@ -306,6 +265,70 @@ autocmd FileType rust command! -nargs=1 Scaffold call Scaffold(<f-args>)
 
 
 
+export def Write(method: string): string
+    if method == "asref"
+        var lines = [
+            \ 'impl AsRef<T> for V {',
+            \ 'fn as_ref(&self) -> &T {}',
+            \ '}',
+            \ ''
+        ]
+        return join(lines, "\n")
+    endif
+
+    if method == "from"
+        var lines = [
+            \ 'impl From<T> for V {',
+            \ 'fn from(value: T) -> Self {}',
+            \ '}',
+            \ ''
+        ]
+        return join(lines, "\n")
+    endif
+
+    if method == "deref"
+        var lines = [
+            \ 'impl Deref for V {',
+            \ 'type Target = T;',
+            \ '',
+            \ 'fn deref(&self) -> &Self::Target {}',
+            \ '}',
+            \ ''
+        ]
+        return join(lines, "\n")
+    endif
+
+    if method == "display"
+        var lines = [
+            \ 'impl fmt::Display for T {',
+            \ "fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {",
+            \ 'write!(f, "{}", self.x)',
+            \ '}',
+            \ '}',
+            \ ''
+        ]
+        return join(lines, "\n")
+    endif
+
+    if method == "test"
+        var lines = [
+            \ '#[cfg(test)]',
+            \ "mod tests {",
+            \ "use super::*;",
+            \ "",
+            \ "#[test]",
+            \ "fn () {",
+            \ "}",
+            \ "}",
+            \ ''
+        ]
+        return join(lines, "\n")
+    endif
+
+    return ""
+enddef
+
+
 # ------------------------------------------------
 # Makes single lines public
 # ------------------------------------------------
@@ -335,7 +358,6 @@ def TakeMeToArgs()
     endif
 enddef
 autocmd FileType rust command! -nargs=0 TakeMeToArgs call TakeMeToArgs()
-
 
 
 # ------------------------------------------------
