@@ -65,7 +65,7 @@ autocmd FileType html,htmldjango
       \ utils.Wrapper("<ol>\<CR></ol>\<Esc>O")
 
 autocmd FileType html,htmldjango
-      \ inoreabbre <expr> <buffer> sel
+      \ inoreabbre <expr> <buffer> sl
       \ utils.Wrapper("<select>\<CR></select>\<Esc>O")
 
 autocmd FileType html,htmldjango
@@ -82,7 +82,11 @@ autocmd FileType html,htmldjango
 
 autocmd FileType html,htmldjango
       \ inoreabbre <expr> <buffer> fo
-      \ utils.Wrapper("<form id=\"\">\<Cr></form>\<Esc>O")
+      \ utils.Wrapper("<footer></footer>\<Esc>FfT>i")
+
+autocmd FileType html,htmldjango
+      \ inoreabbre <expr> <buffer> fo
+      \ utils.Wrapper("<form id=\"\" method=\"\">\<Cr></form>\<Esc>O")
 
 autocmd FileType html,htmldjango
       \ inoreabbre <expr> <buffer> ah
@@ -92,9 +96,13 @@ autocmd FileType html,htmldjango
       \ inoreabbre <expr> <buffer> im
       \ utils.Wrapper("<img src=\"\" alt=\"\"/>\<Esc>Fclli")
 
-autocmd FileType html,htmldjango
+autocmd FileType html
       \ inoreabbre <expr> <buffer> bu
       \ utils.Wrapper("<button type=\"button\" onclick=\"\"></button>\<Esc>F/hi")
+
+autocmd FileType htmldjango
+      \ inoreabbre <expr> <buffer> bu
+      \ utils.Wrapper("<button type=\"button\"></button>\<Esc>F/hi")
 
 autocmd FileType html,htmldjango
       \ inoreabbre <expr> <buffer> tr
