@@ -2,10 +2,6 @@ vim9script
 
 # Rust scripts
 
-# Imports
-import "../general/scripts.vim" as gen
-
-
 # Toggle `pub` or `pub(crate)` on the nearest keyword above
 # ---------------------------------------------------------
 def TogglePub(): void
@@ -324,7 +320,7 @@ enddef
 
 
 # Makes single lines public
-# ------------------------------------------------
+# --------------------------
 def AddSingularPublic()
     var line_content = getline('.')
     if match(line_content, 'pub\s\|pub(crate)\s') != -1
@@ -342,14 +338,26 @@ autocmd FileType rust
 # Move the cursor to the function arguments
 # ------------------------------------------------
 def GoToFnArgs()
-    var result = gen.SearchUpwards(['fn\s'])
+    var view = winsaveview()
+    var current_line = line(".")
+    var keywords = 'fn\s'
 
-    if result == 0
-        execute "normal! f)"
-        echo "Taken to function arguments..."
-    else
-        echo "Failed to find pattern."
+    # Search upwards for `fn `
+    while current_line >= 1
+        var line_content = getline(current_line)
+        if match(line_content, keywords) != -1
+            break
+        endif
+
+        current_line -= 1
+    endwhile
+
+    # Reaching line zero means `fn ` was not found
+    if current_line == 0
+        echo "Cannot move to fn arguments: no `fn` found above." | return
     endif
+
+    cursor(current_line, 0) | exec "norma! f)"
 enddef
 autocmd FileType rust command! -nargs=0 GoToFnArgs call GoToFnArgs()
 
