@@ -25,7 +25,7 @@ autocmd FileType rust
       \ :Implement<space>
 
 autocmd FileType rust
-      \ nnoremap <buffer> <silent> tp
+      \ nnoremap <buffer> <silent> hf
       \ ms:AddSingularPublic<cr>
 
 autocmd FileType rust

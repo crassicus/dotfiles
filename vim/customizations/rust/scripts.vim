@@ -71,9 +71,15 @@ def ToggleAsync(): void
         winrestview(view) | return
     endif
 
-    execute $':{current_line}normal! ffiasync '
+    # If `pub` is present, add `async` after `pub`
+    if match(line_content, 'pub\s') != -1
+        execute $':{current_line}normal! ffiasync '
+        winrestview(view) | return
+    endif
 
+    execute $':{current_line}normal! Iasync '
     winrestview(view)
+
 enddef
 autocmd FileType rust command! -nargs=0 ToggleAsync call ToggleAsync()
 
@@ -199,7 +205,7 @@ def ToggleFnReturnType(): void
     var line_content = getline(current_line)
 
     if match(line_content, 'fn \w\+(.*) {') != -1
-        execute $':{current_line}normal! $i->  '
+        execute $':{current_line}normal! $F)la->  '
         startinsert | return
     endif
 
