@@ -137,13 +137,13 @@ autocmd FileType html,htmldjango
 # inoreabbres
 import "./scripts.vim" as htmlScripts
 
-autocmd FileType html
-      \ inoreabbre <expr> <buffer> bones
-      \ utils.Wrapper(htmlScripts.Write("scf") .. "\<Esc>")
+autocmd FileType html,htmldjango
+      \ inoreabbre <expr> <buffer> scf
+      \ utils.Wrapper(htmlScripts.Write("scaffold") .. "\<Esc>")
 
-autocmd FileType html
-      \ inoreabbre <expr> <buffer> ta
-      \ utils.Wrapper(htmlScripts.Write("scftable") .. "\<Esc>8kf<i")
+autocmd FileType html,htmldjango
+      \ inoreabbre <expr> <buffer> scfta
+      \ utils.Wrapper(htmlScripts.Write("table") .. "\<Esc>8kf<i")
 
 
 defcompile
