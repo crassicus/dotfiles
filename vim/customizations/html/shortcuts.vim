@@ -85,8 +85,12 @@ autocmd FileType html,htmldjango
       \ utils.Wrapper("<footer></footer>\<Esc>FfT>i")
 
 autocmd FileType html,htmldjango
+      \ inoreabbre <expr> <buffer> ti
+      \ utils.Wrapper("<title></title>\<Esc>FtT>i")
+
+autocmd FileType html,htmldjango
       \ inoreabbre <expr> <buffer> fo
-      \ utils.Wrapper("<form id=\"\" method=\"\">\<Cr></form>\<Esc>O")
+      \ utils.Wrapper("<form action=\"\" method=\"\">\<cr></form>\<esc>kfn3li")
 
 autocmd FileType html,htmldjango
       \ inoreabbre <expr> <buffer> ah
