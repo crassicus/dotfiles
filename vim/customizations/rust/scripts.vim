@@ -8,7 +8,7 @@ def TogglePub(): void
     var view = winsaveview()
     var current_line = line(".")
 
-    var keywords = 'fn\s\|struct\|trait\|enum\|type'
+    var keywords = '\v\s?<(fn|struct|trait|enum|type)>'
 
     # Search upwards for any of the `keywords`
     while current_line >= 1
