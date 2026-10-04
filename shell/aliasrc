@@ -20,11 +20,7 @@ alias \
   y="yazi" \
 	ft="foot & disown; exit" \
 	brave="brave-browser-stable & disown; exit" \
-	dv="c $DC/development/development" \
-	bd="c $DC/development/development/building" \
-	bk="c $DC/development/development/back" \
-	fr="c $DC/development/development/front" \
-	lr="ln -s /home/disk/rust/info/cargo .cargo"
+	lr="cp -r /home/disk/rust/info/cargo .cargo"
 
 alias \
   z="zathura-full" \
