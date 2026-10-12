@@ -53,7 +53,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> ha
-      \ ms:ImportFrom @/components/index<cr>
+      \ ms:ImportComponent<space>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> hi

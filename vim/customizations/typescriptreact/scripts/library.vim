@@ -56,3 +56,23 @@ enddef
 autocmd FileType typescriptreact,typescript
       \ command! -nargs=+ ImportFrom
       \ call ImportFrom(<f-args>)
+
+
+export def ImportComponent(url: string): void
+  var line = 1
+
+  while true
+    var content = getline(line)
+    if empty(content) | break | endif
+    line = line + 1
+  endwhile
+
+  var tail = split(url, '/')[-1]
+  var text = $'import {{  }} from "@/components/{url}/{tail}";'
+  append(line - 1, text) | cursor(line, 0)
+  execute "normal! f}i" | startinsert | return
+
+enddef
+autocmd FileType typescriptreact
+      \ command! -nargs=+ ImportComponent
+      \ call ImportComponent(<f-args>)

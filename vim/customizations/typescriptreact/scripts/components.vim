@@ -2,27 +2,17 @@ vim9script
 
 import "../../general/scripts.vim" as gen
 
-# ------------------------------------------------
-#  Creates a React/NextJS component at src/components
-# ------------------------------------------------
-def CreateReactComponent(components: list<string>)
-  g:components = components
-  py3 << EOF
 
-from stacker import create_component
-
-initial_position = vim.eval("expand('%:p')")
-
-for component in vim.eval("g:components"):
-  try:
-      create_component(component)
-  except Exception as e:
-      print("{}".format(e))
-
-EOF
-unlet g:components
+# ---------------------------------------------------------
+# Generate a ReactJS or NextJs component
+# ---------------------------------------------------------
+def CreateComponent(components: list<string>)
+  var cmps = join(components, ' ')
+  echo system($"uxie component {cmps}")
 enddef
-autocmd FileType typescriptreact command! -nargs=* CreateComponent call CreateReactComponent([<f-args>])
+
+autocmd FileType typescriptreact
+  \ command! -nargs=* CreateComponent call CreateComponent([<f-args>])
 
 
 # ------------------------------------------------
