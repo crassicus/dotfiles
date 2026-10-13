@@ -106,42 +106,45 @@ enddef
 autocmd FileType typescriptreact command! -nargs=* AddAttribute call AddAttribute()
 
 
-# ------------------------------------------------
-# Add `ClassName` attribute, in case it's already
-# there, it places the cursor at the end of the
-# string holding the class
-# ------------------------------------------------
-def AddClassName()
+# ---------------------------------------------------------
+# Add `className` attribute with custom logic
+# ---------------------------------------------------------
+def AddClassName(): void
   var line_content = getline(".")
 
-  var condition = "className=\".*\""
-  var matches = match(line_content, condition)
-  if matches != -1
-    cursor(line("."), matches + 1)
-    execute "normal! 2f\""
-    startinsert
-    feedkeys(' ')
-    return
+  var match_position = match(line_content, " className={cx(.*)}")
+  if match_position != -1
+    cursor(line("."), match_position + 1)
+    exe "normal! f)i,\<space>"
+    startinsert | feedkeys(' ') | return
   endif
 
-  condition = "\/>"
-  matches = match(line_content, condition)
-  if matches != -1
-    cursor(line("."), matches + 1)
-    execute "normal! iclassName=\"\""
-    startinsert
-    return
+  # return in case it's an already a multiple line class
+  match_position = match(line_content, " className={cx(.*")
+  if match_position != -1 | return | endif
+
+  match_position = match(line_content, " className={.*}")
+  if match_position != -1
+    cursor(line("."), match_position + 1)
+    exe "normal! f{ci{cx(\<esc>pli,)"
+    startinsert | feedkeys(' ') | return
   endif
 
-  condition = "[^=<]>"
-  matches = match(line_content, condition)
-  if matches != -1
-    execute "normal! 0/[^=]>\<cr>a\<space>className=\"\""
-    startinsert
-    return
+  match_position = match(line_content, " className=\".*\"")
+  if match_position != -1
+    cursor(line("."), match_position + 1)
+    exe "normal! 2f\""
+    startinsert | feedkeys(' ') | return
   endif
 
-  echo "💥 <> pattern not found."
+  match_position = match(line_content, '\v(\=)@<!\>')
+  if match_position != -1
+    echo match_position
+    cursor(line("."), match_position + 1)
+    exe "normal! i\<space>className=\<space>" | startinsert | return
+  endif
+
+  echo "add classname: failed to find a valid pattern."
 enddef
 autocmd FileType typescriptreact command! -nargs=0 AddClassName call AddClassName()
 
