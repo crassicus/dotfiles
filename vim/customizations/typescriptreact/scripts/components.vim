@@ -141,7 +141,7 @@ def AddClassName(): void
   if match_position != -1
     echo match_position
     cursor(line("."), match_position + 1)
-    exe "normal! i\<space>className=\<space>" | startinsert | return
+    exe "normal! i\<space>className=\<esc>l" | startinsert | return
   endif
 
   echo "add classname: failed to find a valid pattern."

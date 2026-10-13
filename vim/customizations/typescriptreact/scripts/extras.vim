@@ -45,22 +45,10 @@ export def Write(method: string): string
         return join(lines, "\n")
     endif
 
-    if method == "component"
+    if method == "cx"
         var lines = [
-            \ 'function X() {',
-            \ 'return <div>Hello Component</div>',
-            \ '}',
-            \ '',
-            \ 'export default X;',
-        ]
-        return join(lines, "\n")
-    endif
-
-    if method == "callback_component"
-        var lines = [
-            \ 'const  = () => {',
-            \ 'return <div>Hello Component</div>',
-            \ '}',
+            \ 'export const cx = (...c: (string | false | null | undefined)[]) =>',
+            \ 'c.filter(Boolean).join(" ");',
         ]
         return join(lines, "\n")
     endif

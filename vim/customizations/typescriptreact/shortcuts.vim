@@ -173,7 +173,7 @@ autocmd FileType typescriptreact
       \ utils.Wrapper("const [, set] = useState();\<Esc>F,i")
 
 autocmd FileType typescriptreact
-      \ inoreabbre <expr> <buffer> cf
+      \ inoreabbre <expr> <buffer> cc
       \ utils.Wrapper("const x = () => {};\<Esc>Fxs")
 
 autocmd FileType typescriptreact
@@ -201,13 +201,9 @@ autocmd FileType typescriptreact
       \ inoreabbre <expr> <buffer> ta
       \ utils.Wrapper(extraScripts.Write("table") .. "\<Esc>8k2fh")
 
-autocmd FileType typescriptreact
-      \ inoreabbre <expr> <buffer> fc
-      \ utils.Wrapper(extraScripts.Write("component") .. "\<Esc>?function\<cr>w")
-
-autocmd FileType typescriptreact
-      \ inoreabbre <expr> <buffer> cc
-      \ utils.Wrapper(extraScripts.Write("callback_component") .. "\<Esc>?const\<cr>whi")
+autocmd FileType typescriptreact,typescript
+      \ inoreabbre <expr> <buffer> cx
+      \ utils.Wrapper(extraScripts.Write("cx") .. "\<Esc>")
 
 
 # ==== Aliases ====
