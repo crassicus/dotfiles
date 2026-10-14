@@ -61,17 +61,25 @@ autocmd FileType typescriptreact,typescript
 export def ImportComponent(url: string): void
   var line = 1
 
+  var content = ""
   while true
-    var content = getline(line)
-    if empty(content) | break | endif
+    content = getline(line)
+    if empty(content) || content =~ "export function" | break | endif
     line = line + 1
   endwhile
 
   var tail = split(url, '/')[-1]
   var text = $'import {{  }} from "@/components/{url}/{tail}";'
-  append(line - 1, text) | cursor(line, 0)
-  execute "normal! f}i" | startinsert | return
 
+  if content =~ 'export function'
+    append(line - 1, text) | append(line, '') | cursor(line, 0)
+  endif
+
+  if empty(content)
+    append(line - 1, text) | cursor(line, 0)
+  endif
+
+  execute "normal! f}i" | startinsert | return
 enddef
 autocmd FileType typescriptreact
       \ command! -nargs=+ ImportComponent
