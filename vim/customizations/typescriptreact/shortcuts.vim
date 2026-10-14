@@ -4,11 +4,11 @@ vim9script
 # ==== Maps ====
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hr
+      \ nnoremap <buffer> ha
       \ :CreateComponent<space>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> hR
+      \ nnoremap <buffer> hA
       \ :CreateRoute<space>
 
 autocmd FileType typescriptreact
@@ -18,10 +18,6 @@ autocmd FileType typescriptreact
 autocmd FileType typescriptreact
       \ nnoremap <buffer> tn
       \ :AddClassName<cr>
-
-autocmd FileType typescriptreact
-      \ nnoremap <silent> <buffer> tf
-      \ :%bd\|e#\|bd#<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> to
@@ -52,7 +48,7 @@ autocmd FileType typescriptreact
       \ ms:ImportFrom react true<cr>
 
 autocmd FileType typescriptreact
-      \ nnoremap <buffer> ha
+      \ nnoremap <buffer> hr
       \ ms:ImportComponent<space>
 
 autocmd FileType typescriptreact
@@ -61,7 +57,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> c.
-      \ :EditAfterTag<cr>
+      \ :EditTagContent<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <silent> <buffer> t<space>

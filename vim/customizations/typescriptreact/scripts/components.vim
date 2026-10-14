@@ -4,7 +4,7 @@ import "../../general/scripts.vim" as gen
 
 
 # ---------------------------------------------------------
-# Generate a ReactJS or NextJs component
+# generate a reactjs or nextjs component
 # ---------------------------------------------------------
 def CreateComponent(components: list<string>)
   var cmps = join(components, ' ')
@@ -15,27 +15,16 @@ autocmd FileType typescriptreact
   \ command! -nargs=* CreateComponent call CreateComponent([<f-args>])
 
 
-# ------------------------------------------------
-#  Creates a NextJS page at src/app
-# ------------------------------------------------
+# ---------------------------------------------------------
+# generate a nextjs route
+# ---------------------------------------------------------
 def CreateRoute(routes: list<string>)
-  g:routes = routes
-  py3 << EOF
-
-from stacker import create_route
-
-initial_position = vim.eval("expand('%:p')")
-
-for route in vim.eval("g:routes"):
-  try:
-      create_route(route)
-  except Exception as e:
-      print("{}".format(e))
-
-EOF
-unlet g:routes
+  var rs = join(routes, ' ')
+  echo system($"uxie route {rs}")
 enddef
-autocmd FileType typescriptreact command! -nargs=* CreateRoute call CreateRoute([<f-args>])
+
+autocmd FileType typescriptreact
+  \ command! -nargs=* CreateRoute call CreateRoute([<f-args>])
 
 
 # ------------------------------------------------
@@ -106,9 +95,9 @@ enddef
 autocmd FileType typescriptreact command! -nargs=* AddAttribute call AddAttribute()
 
 
-# ---------------------------------------------------------
-# Add `className` attribute with custom logic
-# ---------------------------------------------------------
+# ----------------------------------------------------------
+# add `className` attribute to tag with custom logic
+# ----------------------------------------------------------
 def AddClassName(): void
   var line_content = getline(".")
 
@@ -157,10 +146,10 @@ enddef
 autocmd FileType typescriptreact command! -nargs=0 AddClassName call AddClassName()
 
 
-# ------------------------------------------------
-# Creates a css file for the component this function
-# is called from
-# ------------------------------------------------
+# ---------------------------------------------------------
+# creates a css file for the component this function is
+# called from.
+# ---------------------------------------------------------
 def AddComponentCss()
   var absolute_path = expand("%:p")
 
@@ -197,19 +186,18 @@ def AddComponentCss()
 enddef
 
 
-# ------------------------------------------------
-# Takes the cursor to the component's parameters
-# position
-# ------------------------------------------------
+# ---------------------------------------------------------
+# takes the cursor to the component's parameters position
+# ---------------------------------------------------------
 def JumpToComponentHead()
   var result = gen.SearchUpwards(['function\s\u\w*'])
 
-  # If pattern was not found upwards search downwards.
+  # if pattern was not found upwards search downwards.
   if result != 0
     result = gen.SearchDownwards(['function\s\u\w*'])
   endif
 
-  # Means pattern was found and cursor is in target line
+  # means pattern was found and cursor is in target line
   if result == 0
     var line_content = getline(".")
 
@@ -255,9 +243,10 @@ enddef
 autocmd FileType typescriptreact command! -nargs=0 JumpToJsxReturn call JumpToJsxReturn()
 
 
-# ------------------------------------------------
-# Switch to component css if it exists
-# ------------------------------------------------
+# ---------------------------------------------------------
+# switch to component css file if it exists, otherwise
+# create it.
+# ---------------------------------------------------------
 def ToggleTsxToCss()
   var current_file_path = expand("%:p")
 
@@ -288,7 +277,6 @@ def ToggleTsxToCss()
   endif
 
   # it means the script is running from a css file
-  # /foo/bar/counter.module.css -> counter
   if extension == "css"
     var tsx_file = fnamemodify(current_file_path, ':r:r') .. ".tsx"
     execute $"silent edit {tsx_file}"
@@ -301,14 +289,14 @@ autocmd FileType typescriptreact command! -nargs=* ToggleTsxToCss call ToggleTsx
 # ------------------------------------------------
 # Jumps to the tag content and enters insert mode
 # ------------------------------------------------
-def EditAfterTag(): void
+def EditTagContent(): void
   if getline(".") =~ "<.*>.*<\/.*>"
     exec "silent normal! 0/<\\/\<cr>"
     exec "silent normal! cT>\<esc>\<right>"
     startinsert
   endif
 enddef
-autocmd FileType typescriptreact command! -nargs=* EditAfterTag call EditAfterTag()
+autocmd FileType typescriptreact command! -nargs=* EditTagContent call EditTagContent()
 
 # ------------------------------------------------
 # Compile functions
