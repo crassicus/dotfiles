@@ -156,32 +156,36 @@ autocmd FileType typescriptreact command! -nargs=0 AddClassName call AddClassNam
 def AddComponentCss()
   var absolute_path = expand("%:p")
 
-  # Read file and extract random class
-  var content = join(readfile(absolute_path), "\n")
-  var random_class = matchstr(content, 'className="\zs[^"]\+\ze"')
+  # change extension from .tsx to .module.css
+  var css_file = fnamemodify(absolute_path, ":r") .. ".module.css"
 
-  # Change extension from .tsx to .css
-  var css_file = fnamemodify(absolute_path, ":r") .. ".css"
+  # creates css file
+  writefile([], css_file)
 
-  # Creates CSS file
-  var css_content = $"@scope (.{random_class}) {{}}"
-  writefile([css_content], css_file)
-
-  # CSS file name
+  # css file name
   var name = fnamemodify(css_file, ":t")
 
-  var import_statement = $"import \"./{name}\";"
+  var import_statement = $"import styles from \"./{name}\";"
 
   var view = winsaveview()
-  var current_line = 1
-  while !empty(getline(current_line))
-      current_line += 1
+
+  var line = 1
+  while true
+    var line_content = getline(line)
+
+    if line_content =~ 'export function'
+      append(line - 1, import_statement)
+      append(line, '') |  break
+    endif
+
+    if empty(line_content)
+      append(line - 1, import_statement) | break
+    endif
+
+    line = line + 1
   endwhile
 
-  cursor(current_line, 1)
-  execute "normal! i" .. import_statement .. "\<cr>"
   winrestview(view)
-
 enddef
 
 
@@ -223,7 +227,6 @@ def JumpToComponentHead()
 
   endif
 
-
   echo "Failed to find pattern."
 enddef
 autocmd FileType typescriptreact command! -nargs=0 JumpToComponentHead call JumpToComponentHead()
@@ -250,41 +253,41 @@ autocmd FileType typescriptreact command! -nargs=0 JumpToJsxReturn call JumpToJs
 def ToggleTsxToCss()
   var current_file_path = expand("%:p")
 
-  # Get file extension
+  # current file extension
   var extension = fnamemodify(current_file_path, ":e")
 
-  var complete_file_name = ""
-  var message = ""
-
+  # it means the script is running from a tsx file
   if extension == "tsx"
-      complete_file_name =
-        fnamemodify(current_file_path, ":r") .. ".css"
+    var css_file = fnamemodify(current_file_path, ":r") .. ".module.css"
 
-      # Create the CSS file if doesn't exist yet
-      if !filereadable(complete_file_name)
-        var css_file_name = fnamemodify(complete_file_name, ":t")
-        var answer = input($"{css_file_name} file is being created, " ..
-             "do you want to continue (y/n): "
+    # create the css file if it doesn't exist yet
+    if !filereadable(css_file)
+      var css_file_name = fnamemodify(css_file, ":t")
+        var answer = input(
+            $"{css_file_name} file is being created, " ..
+            "do you want to continue (y/n): "
         )
         if answer !=# "y" | redraw! | return | endif
 
         AddComponentCss()
-        message = execute("messages")->split("\n")[-1]
-      endif
-  else
-      complete_file_name = fnamemodify(current_file_path, ":r:r") .. ".tsx"
+        execute $"silent edit {css_file}" | return
+    endif
+
+    if filereadable(css_file)
+      execute $"silent edit {css_file}" | return
+    endif
+
   endif
 
-
-  if filereadable(complete_file_name)
-    execute $"silent edit {complete_file_name}"
-    redraw | echo $"{message}"
-  else
-    echo $"{complete_file_name} doesn't exists."
+  # it means the script is running from a css file
+  # /foo/bar/counter.module.css -> counter
+  if extension == "css"
+    var tsx_file = fnamemodify(current_file_path, ':r:r') .. ".tsx"
+    execute $"silent edit {tsx_file}"
   endif
 
 enddef
-autocmd FileType typescriptreact,css command! -nargs=* ToggleTsxToCss call ToggleTsxToCss()
+autocmd FileType typescriptreact command! -nargs=* ToggleTsxToCss call ToggleTsxToCss()
 
 
 # ------------------------------------------------
