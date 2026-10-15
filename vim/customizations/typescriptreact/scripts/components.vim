@@ -66,33 +66,30 @@ enddef
 autocmd FileType typescriptreact command! -nargs=0 Props call AddProps()
 
 
-# ------------------------------------------------
-# Place the cursor to add an attribute into
-# current tag
-# ------------------------------------------------
-def AddAttribute()
+# ----------------------------------------------------------
+# place the cursor at the end of the tag to insert attribute
+# ----------------------------------------------------------
+def InsertAttribute(): void
   var line_content = getline(".")
 
-  var first_approach = "[^=]\/>"
-  var matching_column = match(line_content, first_approach)
-  if matching_column != -1
-    cursor(line("."), matching_column + 2)
-    startinsert
-    return
+  var match_position = match(line_content, '/>')
+  if match_position != -1
+    echo match_position
+    cursor(line("."), match_position + 1)
+    startinsert | feedkeys(' ') | return
   endif
 
-  var second_approach = "[^=]>"
-  matching_column = match(line_content, second_approach)
-  if matching_column != -1
-    cursor(line("."), matching_column + 2)
-    startinsert
-    feedkeys(" ")
-    return
+  match_position = match(line_content, '\v(\=)@<!\>')
+  if match_position != -1
+    echo match_position
+    cursor(line("."), match_position + 1)
+    startinsert | feedkeys(' ') | return
   endif
 
-  echo "💥 <> pattern not found."
+  echo "insert tag: failed to find valid pattern"
 enddef
-autocmd FileType typescriptreact command! -nargs=* AddAttribute call AddAttribute()
+autocmd FileType typescriptreact
+  \ command! -nargs=* InsertAttribute call InsertAttribute()
 
 
 # ----------------------------------------------------------

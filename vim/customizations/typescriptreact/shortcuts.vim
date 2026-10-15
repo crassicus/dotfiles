@@ -21,7 +21,7 @@ autocmd FileType typescriptreact
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> to
-      \ :AddAttribute<cr>
+      \ :InsertAttribute<cr>
 
 autocmd FileType typescriptreact
       \ nnoremap <buffer> ts
