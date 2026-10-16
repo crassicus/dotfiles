@@ -170,7 +170,7 @@ def AddComponentCss()
   while true
     var line_content = getline(line)
 
-    if line_content =~ 'export function'
+    if line_content =~ 'export function' || line_content =~ 'interface'
       append(line - 1, import_statement)
       append(line, '') |  break
     endif
