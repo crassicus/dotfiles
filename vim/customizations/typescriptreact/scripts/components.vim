@@ -28,40 +28,43 @@ autocmd FileType typescriptreact
 
 
 # ------------------------------------------------
-#  Add Props statement to the current component
+#  add props to current component
 # ------------------------------------------------
-def AddProps()
+def AddProps(): void
 
-  var view = winsaveview()
-  var result = gen.SearchUpwards(['function\s\u\w*'])
+  var line = 1
+  while line < line('$') + 1
+    if match(getline(line), 'function\s\+\u\w*\s*()') != -1 | break | endif
+    line = line + 1
+  endwhile
 
-  if result != 0
-    result = gen.SearchDownwards(['function\s\u\w*'])
+  if line == line('$') + 1
+    echo "error: failed to find valid or fresh component" | return
   endif
 
-  if result == 0
-    var current_line = line('.')
-    var current_content = getline('.')
-    var component_name = matchstr(current_content, 'function \zs\w\+')
-    var props_name = component_name .. 'Props'
-    var props_result = gen.SearchUpwards([props_name])
+  var component_name = matchstr(getline(line), 'function \zs\w\+')
+  var props_name = component_name .. 'Props'
 
-    if props_result == 0
-      echo "The component " .. component_name "already has Props."
+  # serch for Props interface
+  var pline = 1
+  while pline <= line('$') + 1
+    if match(getline(pline), props_name) != -1 | break | endif
+    pline = pline + 1
+  endwhile
 
-      winrestview(view)
-      return
-    endif
-
-    execute $"normal! f)i{{  }}: {props_name}"
-    execute $"normal! Ointerface {props_name} {{}}\<cr>\<up>"
-    execute "normal! f}i\<cr>\<esc>O"
-    startinsert
-    feedkeys('  ')
-    return
+  if pline == line('$') + 1
+    echo "error: component "
+      .. component_name
+      .. " already has props." | return
   endif
 
-  echo "Props pattern was not found."
+  cursor(line, 0)
+
+  execute $"normal! f)i{{  }}: {props_name}"
+  execute $"normal! Ointerface {props_name} {{}}\<cr>\<up>"
+  execute "normal! f}i\<cr>\<esc>O"
+  startinsert | feedkeys('  ') | return
+
 enddef
 autocmd FileType typescriptreact command! -nargs=0 Props call AddProps()
 
@@ -283,9 +286,9 @@ enddef
 autocmd FileType typescriptreact command! -nargs=* ToggleTsxToCss call ToggleTsxToCss()
 
 
-# ------------------------------------------------
+# ---------------------------------------------------------
 # Jumps to the tag content and enters insert mode
-# ------------------------------------------------
+# ---------------------------------------------------------
 def EditTagContent(): void
   if getline(".") =~ "<.*>.*<\/.*>"
     exec "silent normal! 0/<\\/\<cr>"
