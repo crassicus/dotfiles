@@ -77,14 +77,12 @@ def InsertAttribute(): void
 
   var match_position = match(line_content, '/>')
   if match_position != -1
-    echo match_position
     cursor(line("."), match_position + 1)
     startinsert | feedkeys(' ') | return
   endif
 
   match_position = match(line_content, '\v(\=)@<!\>')
   if match_position != -1
-    echo match_position
     cursor(line("."), match_position + 1)
     startinsert | feedkeys(' ') | return
   endif
@@ -129,14 +127,12 @@ def AddClassName(): void
   # some tags end up with '/>'
   match_position = match(line_content, '/>')
   if match_position != -1
-    echo match_position
     cursor(line("."), match_position + 1)
     exe "normal! i\<space>className=\<esc>l" | startinsert | return
   endif
 
   match_position = match(line_content, '\v(\=)@<!\>')
   if match_position != -1
-    echo match_position
     cursor(line("."), match_position + 1)
     exe "normal! i\<space>className=\<esc>l" | startinsert | return
   endif
