@@ -64,14 +64,14 @@ export def ImportComponent(url: string): void
   var content = ""
   while true
     content = getline(line)
-    if empty(content) || content =~ "export function" | break | endif
+    if empty(content) || content =~ 'function \u' | break | endif
     line = line + 1
   endwhile
 
   var tail = split(url, '/')[-1]
   var text = $'import {{  }} from "@/components/{url}/{tail}";'
 
-  if content =~ 'export function'
+  if content =~ 'function \u'
     append(line - 1, text) | append(line, '') | cursor(line, 0)
   endif
 
