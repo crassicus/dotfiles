@@ -95,4 +95,6 @@ let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden ' .
       \ '--exclude node_modules ' .
       \ '--exclude .next'
 
-autocmd BufEnter *.py ALEStopAllLSPs | ALELint
+let g:vim_svelte_plugin_use_typescript = 1
+"autocmd BufEnter *.py ALEStopAllLSPs | ALELint
+"autocmd BufEnter *.py ALELint
