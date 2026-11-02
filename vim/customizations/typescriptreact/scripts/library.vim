@@ -82,5 +82,42 @@ export def ImportComponent(url: string): void
   execute "normal! f}i" | startinsert | return
 enddef
 autocmd FileType typescriptreact
-      \ command! -nargs=+ ImportComponent
+      \ command! -nargs=+ -complete=customlist,CompleteComponents ImportComponent
       \ call ImportComponent(<f-args>)
+
+
+# ---------------------------------------------------------
+# both functions below make possible to have suggestions
+# when importing a component
+# ---------------------------------------------------------
+def ComponentsPath(): string
+  var file = system($"sniffer package.json")
+  if v:shell_error != 0 | echoerr file | return "" | endif
+
+  file = trim(file)
+  var content = readfile(file)->join("\n")
+
+  if content =~ '@react-router/serve'
+      return fnamemodify(file, ':h') .. '/app/components'
+  elseif content =~ 'next'
+      return fnamemodify(file, ':h') .. '/app/components'
+  elseif content =~ 'react'
+      return fnamemodify(file, ':h') .. '/src/components'
+  endif
+
+  return ""
+enddef
+
+def CompleteComponents(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+  const root = ComponentsPath()
+  if root == "" | return [] | endif
+
+  var entries = globpath(root, '**/*', false, true)
+  var folders = entries->filter((_, d) => isdirectory(d))
+  folders = folders->map((_, p) => p[len(root) + 1 : ])
+
+  return folders->filter((_, v) => v =~ '^' .. ArgLead)
+enddef
+
+
+defcompile
