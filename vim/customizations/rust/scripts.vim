@@ -226,8 +226,7 @@ autocmd FileType rust
 export def Scaffold(name: string): void
     if name == "actix"
         var lines = [
-            \ '',
-            \ 'use actix_web::{App, HttpServer, web, middleware::Logger};',
+            \ 'use actix_web::{App, HttpServer, web, middleware::Logger, Responder, HttpResponse};',
             \ 'use env_logger::{init_from_env, Env};',
             \ 'use std::net::TcpListener;',
             \ '',
@@ -236,6 +235,7 @@ export def Scaffold(name: string): void
             \ '    init_from_env(Env::default().default_filter_or("debug"));',
             \ ' ',
             \ '    let listener = TcpListener::bind("127.0.0.1:8080")?;',
+            \ ' ',
             \ '    HttpServer::new(|| {',
             \ '        App::new()',
             \ '            .wrap(Logger::default())',
