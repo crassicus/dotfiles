@@ -18,10 +18,6 @@ autocmd FileType svelte
       \ :AddAttribute<cr>
 
 autocmd FileType svelte
-      \ nnoremap <buffer> hr
-      \ ms:ImportFrom $lib/components/index<cr>
-
-autocmd FileType svelte
       \ nnoremap <buffer> hp
       \ ms:AddProps<cr>
 
@@ -41,7 +37,7 @@ autocmd FileType svelte
       \ inoreabbre <expr> <buffer> ip
       \ (!extraScripts.FindContext(['<script lang="ts">', '</script>']) &&
       \ !extraScripts.FindContext(["<style>", "</style>"])) ?
-      \ utils.Wrapper("<input type=\"text\" id=\"\" />\<Esc>F\"i")
+      \ utils.Wrapper("<input type=\"text\" id=\"\" name=\"\" />\<Esc>F\"i")
       \ : "ip"
 
 autocmd FileType svelte
@@ -132,7 +128,7 @@ autocmd FileType svelte
       \ inoreabbre <expr> <buffer> fo
       \ (!extraScripts.FindContext(['<script lang="ts">', '</script>']) &&
       \ !extraScripts.FindContext(["<style>", "</style>"])) ?
-      \ utils.Wrapper("<form id=\"\">\<Cr></form>\<Esc>O")
+      \ utils.Wrapper("<form id=\"\" method=\"\" use:enhance action="?/default">\<Cr></form>\<Esc>O")
       \ : "fo"
 
 autocmd FileType svelte
@@ -164,7 +160,6 @@ autocmd FileType svelte
       \ : "th"
 
 
-
 # ==== Typescript shortcuts ====
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> int
@@ -177,15 +172,24 @@ autocmd FileType svelte
       \ utils.Wrapper("let x = $derived();<esc>Fxcw") : "de"
 
 autocmd FileType svelte
-      \ inoreabbre <expr> <buffer> cf
+      \ inoreabbre <expr> <buffer> cc
       \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
-      \ utils.Wrapper("const x = () => {};\<Esc>Fxs") : "cf"
+      \ utils.Wrapper("const x = () => {};\<Esc>Fxs") : "cc"
 
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> fn
       \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
       \ utils.Wrapper("function x() {}\<Esc>Fxcw") : "fn"
 
+autocmd FileType svelte
+      \ inoreabbre <expr> <buffer> ii
+      \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
+      \ utils.Wrapper("import from '';\<esc>F'i") : "ii"
+
+autocmd FileType svelte
+      \ inoreabbre <expr> <buffer> ic
+      \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
+      \ utils.Wrapper("import from '$lib/components/';\<esc>F'i") : "ic"
 
 
 # ==== Crossed shortcuts ====
@@ -257,15 +261,14 @@ autocmd FileType svelte
       \ utils.Wrapper(extraScripts.Write("style") .. "<esc><<k<<o")
       \ : "st"
 
+
+# ==== Css shortcuts ====
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> me
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
       \ utils.Wrapper(extraScripts.Write("media_query") .. "<esc>k5wi")
       \ : "me"
 
-
-
-# ==== Css shortcuts ====
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> va
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
@@ -451,10 +454,10 @@ autocmd FileType svelte
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
       \ utils.Wrapper("align-self: ;<Esc>i") : "as"
 
-#autocmd FileType svelte
-      #\ inoreabbrev <expr> <buffer> pi
-      #\ extraScripts.FindContext(["<style>", "</style>"]) ?
-      #\ utils.Wrapper("place-items: ;<Esc>i") : "pi"
+autocmd FileType svelte
+      \ inoreabbrev <expr> <buffer> pit
+      \ extraScripts.FindContext(["<style>", "</style>"]) ?
+      \ utils.Wrapper("place-items: ;<Esc>i") : "pit"
 
 autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> pin
@@ -595,7 +598,6 @@ autocmd FileType svelte
       \ inoreabbrev <expr> <buffer> par
       \ extraScripts.FindContext(["<style>", "</style>"]) ?
       \ utils.Wrapper("position-area: ;<Esc>i") : "par"
-
 
 
 defcompile

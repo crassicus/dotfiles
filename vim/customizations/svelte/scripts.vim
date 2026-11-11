@@ -38,9 +38,9 @@ autocmd FileType svelte command! -nargs=* ChangeTagContent call ChangeTagContent
 
 def AddClass()
   var line_content = getline(".")
-
   var condition = "class=\".*\""
   var matches = match(line_content, condition)
+
   if matches != -1
     cursor(line("."), matches + 1)
     execute "normal! 2f\""
@@ -133,49 +133,6 @@ enddef
 autocmd FileType svelte
       \ command! -nargs=* AddProps
       \ call AddProps()
-
-
-
-# This function automatically finds or creates import statements
-# in Svelte files for a given module pattern.
-export def ImportFrom(pattern: string): void
-  var regex_line_first = $"import {{ .* }} from '{pattern}';$"
-  var regex_line_second = $".*\} from '{pattern}';$"
-  var current_line_number = 1
-
-  while current_line_number <= line("$")
-    var line_content = getline(current_line_number)
-
-    # Logic for when first pattern is found
-    if match(line_content, regex_line_first) != -1
-      cursor(current_line_number, 1)
-      execute "normal! f}\<left>i, \<right>"
-      startinsert | return
-    endif
-
-    # Logic for when second pattern is found
-    if match(line_content, regex_line_second) != -1
-      cursor(current_line_number, 1)
-      execute "normal! f}kea,\<esc>jO\t\t\t"
-      startinsert | return
-    endif
-
-    current_line_number += 1
-  endwhile
-
-
-  try
-    execute(':?<script\ lang="ts">')
-    execute($"normal! o\<tab>import {{  }} from '{pattern}';\<esc>F\}h")
-    startinsert | return
-  catch
-    echo '<script lang="ts"> tag was not found'
-  endtry
-
-enddef
-autocmd FileType svelte
-      \ command! -nargs=1 ImportFrom
-      \ call ImportFrom(<f-args>)
 
 
 # Find out if the current line is inside a context defined by
