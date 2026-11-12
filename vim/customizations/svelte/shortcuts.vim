@@ -1,9 +1,12 @@
 vim9script
-# vim/customizations/svelte/shortcuts.ts
+
+autocmd FileType svelte
+      \ nnoremap <buffer> hr
+      \ :CreateComponent<space>
 
 autocmd FileType svelte
       \ nnoremap <buffer> ha
-      \ :CreateComponent<space>
+      \ :CreateRoute<space>
 
 autocmd FileType svelte
       \ nnoremap <silent> <buffer> c.

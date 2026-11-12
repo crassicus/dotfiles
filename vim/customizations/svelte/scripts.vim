@@ -1,27 +1,26 @@
 vim9script
-# vim/customizations/svelte/scripts.vim
 
-
+# ----------------------------------------------------------
+# generate a svelte component
+# ----------------------------------------------------------
 def CreateComponent(components: list<string>)
-  g:components = components
-  py3 << EOF
-
-from forge import create_component
-
-initial_position = vim.eval("expand('%:p')")
-
-for component in vim.eval("g:components"):
-  try:
-      create_component(initial_position, component)
-  except Exception as e:
-      print("{}".format(e))
-
-EOF
-unlet g:components
+  var cmps = join(components, ' ')
+  echo system($"uxie component {cmps}")
 enddef
+
 autocmd FileType svelte
-      \ command! -nargs=* CreateComponent
-      \ call CreateComponent([<f-args>])
+  \ command! -nargs=* CreateComponent call CreateComponent([<f-args>])
+
+# ----------------------------------------------------------
+# generate a SvelteKit route
+# ----------------------------------------------------------
+def CreateRoute(routes: list<string>)
+  var rs = join(routes, ' ')
+  echo system($"uxie route {rs}")
+enddef
+
+autocmd FileType svelte
+  \ command! -nargs=* CreateRoute call CreateRoute([<f-args>])
 
 
 def ChangeTagContent(): void
