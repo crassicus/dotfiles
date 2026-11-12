@@ -192,7 +192,7 @@ autocmd FileType svelte
 autocmd FileType svelte
       \ inoreabbre <expr> <buffer> ic
       \ extraScripts.FindContext(['<script lang="ts">', '</script>']) ?
-      \ utils.Wrapper("import from '$lib/components/';\<esc>F'i") : "ic"
+      \ utils.Wrapper("import from '#lib/components/';\<esc>F'i") : "ic"
 
 
 # ==== Crossed shortcuts ====
